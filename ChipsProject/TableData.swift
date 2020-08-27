@@ -40,28 +40,50 @@ class TableData {
     var isNewHand = false
     var sliderChips = Int()
     var newHandNeeded = false
+    var winningScreenAlreadyShown = false
     
-    func chooseBlinds() {
+    func chooseBlindPlayers() {
+        activePlayers.forEach { $0.isPlayerSmallBlind = false }
+        activePlayers.forEach { $0.isPlayerBigBlind = false }
+        
         // take away the small blind from the player:
-        activePlayers[smallBlindPlayerIndex].playerChips -= smallBlind
-        potChips += smallBlind
+//        activePlayers[smallBlindPlayerIndex].playerChips -= smallBlind
+//        activePlayers[smallBlindPlayerIndex].playerBet = smallBlind
+//        potChips += smallBlind
+        activePlayers[smallBlindPlayerIndex].isPlayerSmallBlind = true
         
         bigBlindPlayerIndex = smallBlindPlayerIndex + 1
         if bigBlindPlayerIndex > activePlayers.count - 1 {
             bigBlindPlayerIndex = 0
         }
-    
-        activePlayers[bigBlindPlayerIndex].playerChips -= smallBlind * 2
-        potChips += smallBlind * 2
+        
+        // take away the big blind from the next player:
+//        activePlayers[bigBlindPlayerIndex].playerChips -= smallBlind * 2
+//        activePlayers[bigBlindPlayerIndex].playerBet = smallBlind * 2
+//        potChips += smallBlind * 2
+        activePlayers[bigBlindPlayerIndex].isPlayerBigBlind = true
+
         
         print("Small blind for activePlayers index: \(smallBlindPlayerIndex)")
         print("Big blind for active Players index: \(bigBlindPlayerIndex)")
        
-        smallBlindPlayerIndex += 1
+//        smallBlindPlayerIndex += 1
         
-        if smallBlindPlayerIndex > activePlayers.count - 1 {
-            smallBlindPlayerIndex = 0
-        }
+//        if smallBlindPlayerIndex > activePlayers.count - 1 {
+//            smallBlindPlayerIndex = 0
+//        }
+    }
+    
+    func configureBlindsBeforeNewHand() {
+        activePlayers[smallBlindPlayerIndex].playerBetInThisState = smallBlind
+        activePlayers[smallBlindPlayerIndex].playerBet += smallBlind
+        activePlayers[smallBlindPlayerIndex].playerChips -= smallBlind
+        potChips += smallBlind
+        
+        activePlayers[bigBlindPlayerIndex].playerBetInThisState = smallBlind * 2
+        activePlayers[bigBlindPlayerIndex].playerBet += smallBlind * 2
+        activePlayers[bigBlindPlayerIndex].playerChips -= smallBlind * 2
+        potChips += smallBlind * 2
     }
     
     func createPlayers() {
@@ -81,10 +103,10 @@ class TableData {
     }
     
     func checkForFoldedPlayers() {
-        let activePlayersInHandCount = activePlayers.filter { $0.playerActiveInHand }.count
-        if activePlayersInHandCount == 1 {
-            let players = activePlayers.filter { $0.playerActiveInHand }
-            winnerPlayer = players[0] // we have the winner with all info about him (name, chips, etc.)
+        let playersFoldedCount = activePlayers.filter { $0.playerFolded }.count
+        if playersFoldedCount == activePlayers.count - 1 {
+            let playersNotFolded = activePlayers.filter { $0.playerActiveInHand || $0.playerWentAllIn }
+            winnerPlayer = playersNotFolded[0]  // we have the winner with all info about him (name, chips, etc.)
             allPlayersFolded = true
         }
     }

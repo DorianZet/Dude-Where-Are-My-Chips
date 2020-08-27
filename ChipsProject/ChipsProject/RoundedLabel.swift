@@ -11,11 +11,10 @@ import UIKit
 class RoundedLabel: UILabel {
     
     override func awakeFromNib() {
-        self.layer.cornerRadius = 10
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 2
         self.clipsToBounds = true
-        self.backgroundColor = .green
+        self.backgroundColor = .clear
         self.textColor = .black
     }
 }

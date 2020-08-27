@@ -20,12 +20,24 @@ class ChoosePlayersViewController: UIViewController {
     @IBOutlet var eightPlayers: RoundedButton!
     @IBOutlet var ninePlayers: RoundedButton!
     
+    @IBOutlet var backButton: RoundedButton!
+    @IBOutlet var nextButton: RoundedButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        changeFontToPixel()
     }
     
-    
+    @IBAction func chooseBackButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "UnwindToTitleSegue", sender: sender)
+    }
+    @IBAction func chooseNextButton(_ sender: UIButton) {
+        if tableData.numberOfPlayers < 2 {
+            return
+        } else {
+            performSegue(withIdentifier: "TableSettingsSegue", sender: sender)
+        }
+    }
     
     @IBAction func choose2Players(_ sender: UIButton) {
         tableData.numberOfPlayers = 2
@@ -61,16 +73,23 @@ class ChoosePlayersViewController: UIViewController {
     }
     
     func highlightButtonSelection(sender: UIButton) {
-        let allButtons = [twoPlayers, threePlayers, fourPlayers, fivePlayers, sixPlayers, sevenPlayers, eightPlayers, ninePlayers]
+        let allPlayerButtons = [twoPlayers, threePlayers, fourPlayers, fivePlayers, sixPlayers, sevenPlayers, eightPlayers, ninePlayers]
         
-        for button in allButtons {
+        for button in allPlayerButtons {
             button?.layer.borderColor = UIColor.black.cgColor
             button?.layer.borderWidth = 2
-
         }
         
         sender.layer.borderColor = UIColor.systemRed.cgColor
         sender.layer.borderWidth = 4
+    }
+    
+    func changeFontToPixel() {
+        let allButtons = [twoPlayers, threePlayers, fourPlayers, fivePlayers, sixPlayers, sevenPlayers, eightPlayers, ninePlayers, backButton, nextButton]
+        
+        for eachButton in allButtons {
+            eachButton?.titleLabel?.font = UIFont(name: "Pixel Emulator", size: 17)
+        }
     }
     
     @IBAction func unwindToChoosePlayers(_ sender: UIStoryboardSegue) {}

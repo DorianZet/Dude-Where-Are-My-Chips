@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		612551E524E2BCBC00DDAF9B /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */; };
+		612613A224F527380084D729 /* PixelEmulator-xq08.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 612613A124F527380084D729 /* PixelEmulator-xq08.ttf */; };
 		6126394B24D8869800B15A0C /* TableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6126394A24D8869800B15A0C /* TableData.swift */; };
 		6126394D24D886BF00B15A0C /* PlayerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6126394C24D886BF00B15A0C /* PlayerData.swift */; };
 		6126394F24D888B200B15A0C /* TableSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6126394E24D888B200B15A0C /* TableSettingsViewController.swift */; };
@@ -15,6 +16,8 @@
 		612A2BE524D870A500DAC6E8 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A2BE424D870A500DAC6E8 /* RoundedButton.swift */; };
 		612A2BE724D8750A00DAC6E8 /* ChoosePlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A2BE624D8750A00DAC6E8 /* ChoosePlayersViewController.swift */; };
 		612B1C8124D940690058AC81 /* PokerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B1C8024D940690058AC81 /* PokerTableViewController.swift */; };
+		612CFDD824F6A63100497925 /* CountingPlayerChipsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */; };
+		612CFDDA24F6ADD400497925 /* CountingPotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612CFDD924F6ADD400497925 /* CountingPotLabel.swift */; };
 		612D721124D42DFD004BF254 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D721024D42DFD004BF254 /* AppDelegate.swift */; };
 		612D721324D42DFD004BF254 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D721224D42DFD004BF254 /* SceneDelegate.swift */; };
 		612D721524D42DFD004BF254 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D721424D42DFD004BF254 /* ViewController.swift */; };
@@ -45,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedLabel.swift; sourceTree = "<group>"; };
+		612613A124F527380084D729 /* PixelEmulator-xq08.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PixelEmulator-xq08.ttf"; path = "../../Project17/Project17/PixelEmulator-xq08.ttf"; sourceTree = "<group>"; };
 		6126394A24D8869800B15A0C /* TableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableData.swift; sourceTree = SOURCE_ROOT; };
 		6126394C24D886BF00B15A0C /* PlayerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerData.swift; sourceTree = "<group>"; };
 		6126394E24D888B200B15A0C /* TableSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSettingsViewController.swift; sourceTree = "<group>"; };
@@ -52,6 +56,8 @@
 		612A2BE424D870A500DAC6E8 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		612A2BE624D8750A00DAC6E8 /* ChoosePlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlayersViewController.swift; sourceTree = "<group>"; };
 		612B1C8024D940690058AC81 /* PokerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokerTableViewController.swift; sourceTree = "<group>"; };
+		612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingPlayerChipsLabel.swift; sourceTree = "<group>"; };
+		612CFDD924F6ADD400497925 /* CountingPotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingPotLabel.swift; sourceTree = "<group>"; };
 		612D720D24D42DFD004BF254 /* ChipsProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipsProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		612D721024D42DFD004BF254 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		612D721224D42DFD004BF254 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,7 +138,10 @@
 				6126394A24D8869800B15A0C /* TableData.swift */,
 				6126394C24D886BF00B15A0C /* PlayerData.swift */,
 				612A2BE424D870A500DAC6E8 /* RoundedButton.swift */,
+				612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */,
+				612CFDD924F6ADD400497925 /* CountingPotLabel.swift */,
 				612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */,
+				612613A124F527380084D729 /* PixelEmulator-xq08.ttf */,
 			);
 			path = ChipsProject;
 			sourceTree = "<group>";
@@ -262,6 +271,7 @@
 				612D721D24D42E01004BF254 /* LaunchScreen.storyboard in Resources */,
 				612D721A24D42E01004BF254 /* Assets.xcassets in Resources */,
 				612D721824D42DFD004BF254 /* Main.storyboard in Resources */,
+				612613A224F527380084D729 /* PixelEmulator-xq08.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +303,9 @@
 				612A2BE524D870A500DAC6E8 /* RoundedButton.swift in Sources */,
 				6126394D24D886BF00B15A0C /* PlayerData.swift in Sources */,
 				612D721124D42DFD004BF254 /* AppDelegate.swift in Sources */,
+				612CFDD824F6A63100497925 /* CountingPlayerChipsLabel.swift in Sources */,
 				612D721324D42DFD004BF254 /* SceneDelegate.swift in Sources */,
+				612CFDDA24F6ADD400497925 /* CountingPotLabel.swift in Sources */,
 				6126394F24D888B200B15A0C /* TableSettingsViewController.swift in Sources */,
 				6126394B24D8869800B15A0C /* TableData.swift in Sources */,
 				612A2BE724D8750A00DAC6E8 /* ChoosePlayersViewController.swift in Sources */,

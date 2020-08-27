@@ -9,13 +9,17 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    @IBOutlet var backButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func tapBackButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "UnwindToTitleSegue", sender: sender)
+    }
     
     
 
