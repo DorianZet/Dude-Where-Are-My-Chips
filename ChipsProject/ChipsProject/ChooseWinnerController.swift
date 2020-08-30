@@ -15,6 +15,8 @@ class ChooseWinnerController: UIViewController {
     @IBOutlet var nextPlayerButton: UIButton!
     @IBOutlet var playerNameLabel: UILabel!
     
+    @IBOutlet var newHandButton: RoundedButton!
+    
     @IBOutlet var potChipsLabel: CountingPotLabel!
     @IBOutlet var playerChipsLabel: CountingPlayerChipsLabel!
     
@@ -29,6 +31,7 @@ class ChooseWinnerController: UIViewController {
     
     var playersAccountableForWin = [PlayerData]()
     
+    var countAnimationDuration: Double = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,9 +46,9 @@ class ChooseWinnerController: UIViewController {
         setUpPlayersAccountableForWin()
         
         setUpLabelsAndButtons()
-       
-        OKButton.setTitle("OK", for: .normal)
-                
+        
+        chooseTemporaryWinnerPlayer()
+
         for eachPlayer in tableData.activePlayers {
             print("\(eachPlayer.playerName) BET: \(eachPlayer.playerBet)")
             print("\(eachPlayer.playerName) BET IN THIS STATE: \(eachPlayer.playerBetInThisState)")
@@ -82,19 +85,24 @@ class ChooseWinnerController: UIViewController {
     
     @IBAction func tapOKButton(_ sender: UIButton) {
         confirmWinnerPlayer()
-        // uncomment the code below to have a fully playable version of the app (you lose the counting label animation, but once you choose the winner the app goes back to the PokerTableViewController and the game continues:
-//        if tableData.potChips == 0 {
-//            removeLosers()
-//
-//            if tableData.activePlayers.count == 1 {
-//                let ac = UIAlertController(title: "\(tableData.activePlayers[0].playerName) wins!", message: nil, preferredStyle: .alert)
-//                ac.addAction(UIAlertAction(title: "OK", style: .default))
-//                present(ac, animated: true)
-//                print("GAME FINISHED, ONLY 1 PLAYER LEFT")
-//            } else {
-//                performSegue(withIdentifier: "UnwindToPokerTableSegue", sender: sender)
-//            }
-//        }
+        
+        if tableData.potChips == 0 {
+            removeLosers()
+
+            // show summary, use the functions from 'prepareForSegue' and exit to a new hand:
+            //summary here
+            if tableData.activePlayers.count == 1 {
+                let ac = UIAlertController(title: "\(tableData.activePlayers[0].playerName) wins!", message: nil, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default))
+                present(ac, animated: true)
+                print("GAME FINISHED, ONLY 1 PLAYER LEFT")
+            } else {
+                hideCenterButtonsAndLabelAndShowNewHandLabel()
+            }
+        }
+    }
+    @IBAction func tapNewHandButton(_ sender: Any) {
+        performSegue(withIdentifier: "UnwindToPokerTableSegue", sender: sender)
     }
     
     func setUpPlayersAccountableForWin() {
@@ -108,7 +116,6 @@ class ChooseWinnerController: UIViewController {
         playerNameLabel.backgroundColor = .clear
         playerNameLabel.clipsToBounds = true
         playerNameLabel.backgroundColor = .systemYellow
-        chooseTemporaryWinnerPlayer()
         
         potChipsLabel.text = "POT: \(tableData.potChips)"
         potChipsLabel.backgroundColor = .clear
@@ -120,6 +127,7 @@ class ChooseWinnerController: UIViewController {
         nextPlayerButton.layer.borderColor = UIColor.clear.cgColor
         nextPlayerButton.layer.borderWidth = 0
         nextPlayerButton.backgroundColor = .clear
+        OKButton.setTitle("OK", for: .normal)
     }
     
     func chooseTemporaryWinnerPlayer() {
@@ -138,33 +146,70 @@ class ChooseWinnerController: UIViewController {
             let sidePotWin = tableData.winnerPlayer.playerBet * playersWhoCanWinCount
             
             if sidePotWin < tableData.potChips {
+                // first animation case
+//                let sidePotInfo = "Side pot has been created, choose the player with the next best cards"
+//                UIView.animate(withDuration: 0.2) {
+//                    self.titleLabel.alpha = 0
+//                }
+//                self.titleLabel.text = sidePotInfo.uppercased()
+//                UIView.animate(withDuration: 0.2) {
+//                    self.titleLabel.alpha = 1
+//                }
+                potChipsLabel.count(fromValue: Float(tableData.potChips), to: Float(tableData.potChips - sidePotWin), withDuration: countAnimationDuration, andAnimationType: .Linear, andCounterType: .Int)
+                playerChipsLabel.count(fromValue: Float(winnerPlayer.playerChips), to: Float(winnerPlayer.playerChips + tableData.potChips), withDuration: countAnimationDuration, andAnimationType: .Linear, andCounterType: .Int)
                 tableData.winnerPlayer.playerChips += sidePotWin
                 tableData.potChips -= sidePotWin
+                
+                self.view.isUserInteractionEnabled = false
+                chooseNewAccountablePlayerForSidePotWinWithAnimatedLabel(withDelay: 1.3)
             } else {
+                // second animation case
+                playerChipsLabel.count(fromValue: Float(tableData.winnerPlayer.playerChips), to: Float(tableData.winnerPlayer.playerChips + tableData.potChips), withDuration: countAnimationDuration, andAnimationType: .Linear, andCounterType: .Int)
+                potChipsLabel.count(fromValue: Float(tableData.potChips), to: 0, withDuration: countAnimationDuration, andAnimationType: .Linear, andCounterType: .Int)
+                
                 tableData.winnerPlayer.playerChips += tableData.potChips
                 tableData.potChips -= tableData.potChips
             }
             // decide what to do with the rest of the chips (tableData.potChips). 1 "all in" player won his bet multiplied by the number of "all in" and "active in hand" players. If his bet was less than the minimum bet was, there are some chips left - decide where they should go now.
             
-            //Now that the side pot has been created, in the title label, inform that the side pot has been created and you want the players to pick the player with next best cards
-            let sidePotInfo = "Side pot has been created, choose player with next best cards"
-            titleLabel.text = sidePotInfo.uppercased()
-            potChipsLabel.text = "POT: \(tableData.potChips)"
+            //HERE GOES: in the title label, inform that the side pot has been created and you want the players to pick the player with next best cards
             
-            let winnerPlayerIndex = playersAccountableForWin.firstIndex(of: winnerPlayer)
-            if let winnerPlayerIndex = winnerPlayerIndex {
-                playersAccountableForWin.remove(at: winnerPlayerIndex)
-                
-                playerNameLabel.text = playersAccountableForWin[0].playerName
-                chooseTemporaryWinnerPlayer()
-            }
         } else {
             tableData.winnerPlayer = winnerPlayer
-            playerChipsLabel.count(fromValue: Float(tableData.winnerPlayer.playerChips), to: Float(tableData.winnerPlayer.playerChips + tableData.potChips), withDuration: 3, andAnimationType: .EaseOut, andCounterType: .Int)
-            potChipsLabel.count(fromValue: Float(tableData.potChips), to: 0, withDuration: 3, andAnimationType: .EaseOut, andCounterType: .Int)
-            
+            playerChipsLabel.count(fromValue: Float(tableData.winnerPlayer.playerChips), to: Float(tableData.winnerPlayer.playerChips + tableData.potChips), withDuration: countAnimationDuration, andAnimationType: .Linear, andCounterType: .Int)
+            potChipsLabel.count(fromValue: Float(tableData.potChips), to: 0, withDuration: countAnimationDuration, andAnimationType: .Linear, andCounterType: .Int)
             tableData.winnerPlayer.playerChips += tableData.potChips
             tableData.potChips -= tableData.potChips
+        }
+    }
+    
+    func chooseNewAccountablePlayerForSidePotWinWithAnimatedLabel(withDelay delayAfterCounting: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + countAnimationDuration + delayAfterCounting) {
+            let winnerPlayerIndex = self.playersAccountableForWin.firstIndex(of: self.winnerPlayer)
+            if let winnerPlayerIndex = winnerPlayerIndex {
+                self.playersAccountableForWin.remove(at: winnerPlayerIndex)
+                
+                let sidePotInfo = "Side pot has been created, choose the player with the next best cards"
+                UIView.animate(withDuration: 0.2) {
+                    self.titleLabel.alpha = 0
+                }
+                self.titleLabel.text = sidePotInfo.uppercased()
+                UIView.animate(withDuration: 0.2) {
+                    self.titleLabel.alpha = 1
+                }
+                
+                UIView.animate(withDuration: 0.2, animations:  {
+                    self.playerNameLabel.alpha = 0
+                }, completion: { _ in
+                    self.playerNameLabel.text = self.playersAccountableForWin[0].playerName
+                    self.chooseTemporaryWinnerPlayer()
+                })
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.playerNameLabel.alpha = 1
+                }, completion: { _ in
+                    self.view.isUserInteractionEnabled = true
+                })
+            }
         }
     }
     
@@ -198,9 +243,24 @@ class ChooseWinnerController: UIViewController {
         }
     }
     
+    func hideCenterButtonsAndLabelAndShowNewHandLabel() {
+        UIView.animate(withDuration: 0.4) {
+            self.playerNameLabel.alpha = 0
+            self.playerNameLabel.isHidden = true
+            self.OKButton.alpha = 0
+            self.OKButton.isHidden = true
+            self.nextPlayerButton.alpha = 0
+            self.nextPlayerButton.isHidden = true
+            self.previousPlayerButton.alpha = 0
+            self.previousPlayerButton.isHidden = true
+            self.newHandButton.alpha = 1
+            self.newHandButton.isHidden = false
+        }
+    }
+    
     func changeFontToPixel() {
         let biggerLabels = [potChipsLabel, playerChipsLabel, playerNameLabel]
-        let buttons = [previousPlayerButton, nextPlayerButton, OKButton]
+        let buttons = [previousPlayerButton, nextPlayerButton, OKButton, newHandButton]
         
         for eachLabel in biggerLabels {
             eachLabel?.font = UIFont(name: "Pixel Emulator", size: 25)
@@ -228,12 +288,12 @@ class ChooseWinnerController: UIViewController {
 
 }
 
-extension Double {
-    func toInt() -> Int? {
-        guard (self <= Double(Int.max).nextDown) && (self >= Double(Int.min).nextUp) else {
-            return nil
-        }
-
-        return Int(self)
-    }
-}
+//extension Double {
+//    func toInt() -> Int? {
+//        guard (self <= Double(Int.max).nextDown) && (self >= Double(Int.min).nextUp) else {
+//            return nil
+//        }
+//
+//        return Int(self)
+//    }
+//}

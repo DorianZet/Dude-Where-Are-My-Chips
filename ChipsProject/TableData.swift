@@ -75,15 +75,42 @@ class TableData {
     }
     
     func configureBlindsBeforeNewHand() {
-        activePlayers[smallBlindPlayerIndex].playerBetInThisState = smallBlind
-        activePlayers[smallBlindPlayerIndex].playerBet += smallBlind
-        activePlayers[smallBlindPlayerIndex].playerChips -= smallBlind
-        potChips += smallBlind
+        // See if the small blind player can afford a small blind:
+        let smallBlindPlayer = activePlayers[smallBlindPlayerIndex]
+        if smallBlindPlayer.playerChips > smallBlind {
+            smallBlindPlayer.playerBetInThisState = smallBlind
+            smallBlindPlayer.playerBet += smallBlind
+            smallBlindPlayer.playerChips -= smallBlind
+            potChips += smallBlind
+        } else {
+            print("Small blind player couldn't afford a small blind, entered with \(smallBlindPlayer.playerChips) small blind")
+            smallBlindPlayer.playerBetInThisState = smallBlindPlayer.playerChips
+            smallBlindPlayer.playerBet += smallBlindPlayer.playerChips
+            potChips += smallBlindPlayer.playerChips
+            smallBlindPlayer.playerChips -= smallBlindPlayer.playerChips
+            
+            smallBlindPlayer.playerWentAllIn = true
+            smallBlindPlayer.playerActiveInHand = false
+        }
         
-        activePlayers[bigBlindPlayerIndex].playerBetInThisState = smallBlind * 2
-        activePlayers[bigBlindPlayerIndex].playerBet += smallBlind * 2
-        activePlayers[bigBlindPlayerIndex].playerChips -= smallBlind * 2
-        potChips += smallBlind * 2
+        // See if the big blind player can afford a big blind:
+        let bigBlindPlayer = activePlayers[bigBlindPlayerIndex]
+        if bigBlindPlayer.playerChips > smallBlind * 2 {
+            activePlayers[bigBlindPlayerIndex].playerBetInThisState = smallBlind * 2
+            activePlayers[bigBlindPlayerIndex].playerBet += smallBlind * 2
+            activePlayers[bigBlindPlayerIndex].playerChips -= smallBlind * 2
+            potChips += smallBlind * 2
+        } else {
+            print("Big blind player couldn't afford a big blind, entered with \(bigBlindPlayer.playerChips) big blind")
+            bigBlindPlayer.playerBetInThisState = bigBlindPlayer.playerChips
+            bigBlindPlayer.playerBet += bigBlindPlayer.playerChips
+            potChips += bigBlindPlayer.playerChips
+            bigBlindPlayer.playerChips -= bigBlindPlayer.playerChips
+            
+            bigBlindPlayer.playerWentAllIn = true
+            bigBlindPlayer.playerActiveInHand = false
+        }
+        
     }
     
     func createPlayers() {

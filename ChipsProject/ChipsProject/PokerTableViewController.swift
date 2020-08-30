@@ -49,8 +49,8 @@ class PokerTableViewController: UIViewController {
 
     
     override func viewDidAppear(_ animated: Bool) {
-        // animating the "pre-flop" animation every time the view appears:
         animateHandStateLabel(for: "PRE-FLOP")
+//        tutaj jest brzydka animacja, do poprawienia, reszta wyglada juz dobrze (tranzycja pomiedzy state'ami)
     }
     
     override func viewDidLoad() {
@@ -94,31 +94,47 @@ class PokerTableViewController: UIViewController {
             // show the winner and move to a new hand
             print("All players folded, \(tableData.winnerPlayer.playerName) WINS!")
             safelyShowChooseWinnerController()
-             // rather than that, I should just present a controller with information in the winning player (as there is only 1 player left, we already know the winner, so we don't need to choose him manually).
+             // rather than that, we should just present a controller with information in the winning player (because we already know the winner, we don't need to choose him).
             tableData.gameState = .finishHand
         } else {
             checkIfAllPlayersWentAllIn()
             checkForNextState()
             newTurn()
         }
+        
     }
     
     @IBAction func tapCallCheckButton(_ sender: UIButton) {
         tableData.currentPlayer.playerMadeAMove = true
         
         if tableData.gameState == GameState.preFlop {
-            // "ALL IN" button behavior:
+            // zachowanie "ALL IN" button:
             if sender.title(for: .normal) == "ALL IN" {
                 configureAllInButton()
-            } else { // "CALL" button behavior:
+            } else { // zachowanie "CALL" button:
                 configureCallButton()
             }
         } else {
-            if sender.title(for: .normal) == "ALL IN" { // "ALL IN" button behavior:
+            if sender.title(for: .normal) == "ALL IN" { // zachowanie "ALL IN" button:
                 configureAllInButton()
-            } else if (sender.titleLabel?.text?.contains("CALL"))! { // "CALL" button behavior:
+            } else if (sender.titleLabel?.text?.contains("CALL"))! { // zachowanie "CALL" button:
                 configureCallButton()
-            } else { // "CHECK" button behavior:
+            } else { // zachowanie "CHECK" button:
+
+//                tableData.currentPlayer.playerChecked = true
+//                let playersWhoChecked = tableData.activePlayers.filter { $0.playerChecked }
+//                let playersWhoFolded = tableData.activePlayers.filter { $0.playerActiveInHand == false }
+//                let playersWhoAreActive = tableData.activePlayers.filter { $0.playerActiveInHand }
+//                let playersWhoWentAllIn = tableData.activePlayers.filter { $0.playerWentAllIn }
+//                let playersWhoMoved = tableData.activePlayers.filter { $0.playerMadeAMove }
+//
+//                let allPlayersMoved = playersWhoMoved.allSatisfy({ $0.playerMadeAMove == true })
+//
+//                if (playersWhoChecked.count == tableData.activePlayers.count - playersWhoFolded.count && allPlayersMoved) || (playersWhoChecked.count + playersWhoWentAllIn.count == playersWhoAreActive.count && allPlayersMoved) {
+//                    print("Players checked, going to the next state")
+//                    goToNextState()
+//                    playersWhoChecked.forEach { $0.playerChecked = false }
+//                }
                 checkForNextState()
                 newTurn()
             }
@@ -132,6 +148,39 @@ class PokerTableViewController: UIViewController {
             configureBetButton()
         } else { // if button's title is "RAISE":
             configureRaiseButton()
+            
+//            if betSlider.isHidden == false {
+//                return
+//            } else {
+//                betSlider.isHidden = false
+//                minusButton.isHidden = false
+//                OKButton.isHidden = false
+//                plusButton.isHidden = false
+//
+//                var chipsToMatchBet = 0
+//
+//                if tableData.minimumBet == tableData.currentPlayer.playerBetInThisState {
+//                    chipsToMatchBet = tableData.minimumBet
+//                } else {
+//                    chipsToMatchBet = tableData.minimumBet - tableData.currentPlayer.playerBetInThisState
+//                }
+//                if tableData.currentPlayer.playerChips < chipsToMatchBet {
+//                    betSlider.isUserInteractionEnabled = false
+//                    betSlider.setValue(Float(sliderChips), animated: true)
+//                    currentBet = sliderChips
+//                    sliderChips -= sliderChips
+//                    minusButton.isHidden = true
+//                    plusButton.isHidden = true
+//                    OKButton.setTitle("ALL IN", for: .normal)
+//                } else {
+//                    betSlider.isUserInteractionEnabled = true
+//                    betSlider.minimumValue = Float(chipsToMatchBet)
+//                    betSlider.maximumValue = Float(sliderChips)
+//                    betSlider.setValue(betSlider.minimumValue, animated: true)
+//                    currentBet = chipsToMatchBet
+//                    sliderChips -= chipsToMatchBet
+//                }
+//            }
         }
     }
     @IBAction func betSliderAction(_ sender: UIButton) {
@@ -210,6 +259,9 @@ class PokerTableViewController: UIViewController {
             tableData.currentPlayer.playerWentAllInForSidePot = true
         }
         
+//        if tableData.currentPlayer.playerBetInThisState > tableData.minimumBet {
+//            tableData.minimumBet = tableData.currentPlayer.playerBetInThisState
+//        }
         playerChips -= playerChips
         tableData.currentPlayer.playerChips = playerChips
         tableData.currentPlayer.playerWentAllIn = true
@@ -317,6 +369,9 @@ class PokerTableViewController: UIViewController {
                 configureTurn()
             }
         } else if tableData.gameState == GameState.finishHand {
+            //finish the hand and move to the next one
+            // show winning screen, choose the player, add the pot chips to his chips, check all activePlayers - if they have 0 chips, remove them from activePlayers array, and turn on a new hand.
+            
             safelyShowChooseWinnerController()
             print("SHOWING THE HAND FINISH SCREEN")
         }
@@ -331,12 +386,11 @@ class PokerTableViewController: UIViewController {
         }
     }
     
-    func checkForNextState() {
+    func checkForNextState() { // everything grayed out has been left just for safety.
         let playingPlayers = tableData.activePlayers.filter { $0.playerActiveInHand }
         
-        let allBetsAreEqual = playingPlayers.allSatisfy({
-            $0.playerBetInThisState == tableData.minimumBet || allBetsAreZero() //
-        })
+        let allBetsAreEqual = playingPlayers.allSatisfy  ({
+            $0.playerBetInThisState == tableData.minimumBet }) || allBetsAreZero()
         let allPlayersMoved = tableData.activePlayers.allSatisfy({ $0.playerMadeAMove == true })
         
         if allPlayersMoved {
@@ -378,7 +432,9 @@ class PokerTableViewController: UIViewController {
             decideWhoStartsWhenNewHand()
             
             tableData.configureBlindsBeforeNewHand()
-
+            
+            seeIfWeCanImmediatelyShowChooseWinnerControllerWith1PlayerLeft()
+            
             for eachPlayer in tableData.activePlayers {
                 print("\(eachPlayer.playerName) BET: \(eachPlayer.playerBet)")
                 print("\(eachPlayer.playerName) BET IN THIS STATE: \(eachPlayer.playerBetInThisState)")
@@ -402,6 +458,8 @@ class PokerTableViewController: UIViewController {
             
             tableData.nextStateNeeded = false
         } else {
+            seeIfWeCanImmediatelyShowChooseWinnerControllerWith1PlayerLeft()
+
             tableData.currentPlayer = tableData.activePlayers[tableData.currentPlayerIndex]
             for eachPlayer in tableData.activePlayers {
                 print("\(eachPlayer.playerName) BET: \(eachPlayer.playerBet)")
@@ -411,8 +469,19 @@ class PokerTableViewController: UIViewController {
             print("POT: \(tableData.potChips)")
         }
     
-        if tableData.currentPlayer.playerActiveInHand == true { // accept the player in the turn only if he hasn't folded or went all-in.
-        
+        if tableData.currentPlayer.playerActiveInHand == true { // accept the player in the turn only if he hasn't folded
+            
+//            if tableData.currentPlayer.playerWentAllIn == true { // skip to the next player if the current one went all in
+//                print("\(tableData.currentPlayer.playerName) went all in, skipping to the next player")
+//                tableData.currentPlayerIndex += 1
+//                if tableData.currentPlayerIndex > tableData.activePlayers.count - 1 {
+//                    tableData.currentPlayerIndex = 0
+//                }
+//                DispatchQueue.main.async { [weak self] in
+//                    self?.newTurn()
+//                }
+//                return
+//            }
             raiseBetButton.isEnabled = true
             raiseBetButton.alpha = 1
             if tableData.currentPlayer.isPlayerSmallBlind == true {
@@ -422,6 +491,13 @@ class PokerTableViewController: UIViewController {
             } else {
                 playerLabel.text = "\(tableData.currentPlayer.playerName)'S TURN"
             }
+//            if tableData.currentPlayer.isPlayerSmallBlind == true && tableData.currentPlayer.playerMadeAMove == false && tableData.gameState == .preFlop {
+//                tableData.currentPlayer.playerBetInThisState = tableData.smallBlind
+//                tableData.currentPlayer.playerBet += tableData.smallBlind
+//            } else if tableData.currentPlayer.isPlayerBigBlind == true && tableData.currentPlayer.playerMadeAMove == false && tableData.gameState == .preFlop {
+//                tableData.currentPlayer.playerBetInThisState = tableData.smallBlind * 2
+//                tableData.currentPlayer.playerBet += tableData.smallBlind * 2
+//            }
 
             minimumBetLabel.text = "MINIMUM BET: \(tableData.minimumBet)"
             playerBetLabel.text = "YOUR BET: \(tableData.currentPlayer.playerBetInThisState)"
@@ -445,6 +521,18 @@ class PokerTableViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 self?.newTurn()
             }
+        }
+    }
+    
+    func seeIfWeCanImmediatelyShowChooseWinnerControllerWith1PlayerLeft() {
+        // poniewaz wszystko dzieje sie bardzo szybko (gracze moga nie sprawdzic ze po wcisnieciu new hand, zostaje tylko jeden gracz, w wyniku czego natychmiast pojawia sie znowu ChooseWinnerVC), dlatego chyba warto w tym przypadku oznajmic na koncowym ekranie ze "all players but 1 went all in, choose the winner):
+        let playingPlayers = tableData.activePlayers.filter { $0.playerActiveInHand }
+
+        if playingPlayers.count == 1 && playingPlayers[0].playerBetInThisState >= tableData.minimumBet  {
+            safelyShowChooseWinnerController()
+            print("All players but 1 went all in, showing finish hand screen")
+            tableData.gameState = .finishHand
+            return
         }
     }
     
@@ -506,6 +594,15 @@ class PokerTableViewController: UIViewController {
             }
             self.configureTurn()
             self.currentBetLabel.isHidden = false
+//            ///
+//            for each in allBigLabels {
+//                each?.isHidden = false
+//            }
+//
+//            for each in allSmallLabels {
+//                each?.isHidden = false
+//            }
+//            ///
         }
         UIView.animate(withDuration: 0.3, delay: 2.0, usingSpringWithDamping: 10, initialSpringVelocity: 12, options: [], animations: {
             self.handStateLabel.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
@@ -516,6 +613,7 @@ class PokerTableViewController: UIViewController {
         }
     }
     
+    // funkcja, którą tworzymy po to, żeby ewentualnie przyspieszyc rozgrywke do koncowego ekranu jesli wszyscy gracze juz weszli all in (nie ma sensu przechodzic przez takie stage jak flop, turn itd. jesli gracze nie mają już nic do roboty):
     func checkIfAllPlayersWentAllIn() {
         let playersWhoWentAllIn = tableData.activePlayers.filter { $0.playerWentAllIn == true }
         let playersWhoFolded = tableData.activePlayers.filter { $0.playerFolded == true }
@@ -540,9 +638,12 @@ class PokerTableViewController: UIViewController {
     
     func configureButtonsForEachState() {
         if tableData.gameState != GameState.preFlop {
+            // zrob petle, ktora przejezdza przez wszystkich aktywnych graczy i sprawdza ich bety. jesli ktorykolwiek nie rowna sie 0, check button sie zmienia w call button.
+//            let playersActiveInHand = tableData.activePlayers.filter { $0.playerActiveInHand }
+//            let playersActiveWithZeroBet = tableData.activePlayers.filter { $0.playerBetInThisState == 0 &&  $0.playerActiveInHand}
             
             let playersActiveInHand = tableData.activePlayers.filter { $0.playerActiveInHand }
-            let noOnePutBet = playersActiveInHand.allSatisfy({$0.playerBetInThisState == 0})
+            let noOnePutBet = playersActiveInHand.allSatisfy({ $0.playerBetInThisState == 0 })
             
             if tableData.minimumBet == tableData.smallBlind * 2 && noOnePutBet {
                 print("no one has bet so far")
@@ -575,32 +676,75 @@ class PokerTableViewController: UIViewController {
                 }
             }
         } else if tableData.gameState == GameState.preFlop {
+            // NA PRÓBĘ: (SPRAWDŹ, W KTORYM GAMESTATE ZROBIŁ SIĘ POT:88, JESLI JEST TO .PREFLOP, PONIZSZY KOD MOZE BYC ROZWIAZANIEM!)
             let chipsToMatchBet = tableData.minimumBet - tableData.currentPlayer.playerBetInThisState
 
-            if  playerChips > tableData.minimumBet {
-                callCheckButton.setTitle("CALL: \(chipsToMatchBet)", for: .normal)
-                if playerChips > tableData.minimumBet * 2 {
-                    raiseBetButton.setTitle("RAISE", for: .normal)
+            if chipsToMatchBet != 0 {
+                if  playerChips > tableData.minimumBet {
+                    callCheckButton.setTitle("CALL: \(chipsToMatchBet)", for: .normal)
+                    if playerChips > tableData.minimumBet * 2 {
+                        raiseBetButton.setTitle("RAISE", for: .normal)
+                    } else {
+                        raiseBetButton.setTitle("ALL IN", for: .normal)
+                    }
+                    minimumBetLabel.text = "MINIMUM BET: \(tableData.minimumBet)"
                 } else {
-                    raiseBetButton.setTitle("ALL IN", for: .normal)
+                    callCheckButton.setTitle("ALL IN", for: .normal)
+                    raiseBetButton.setTitle("RAISE", for: .normal)
+                    raiseBetButton.isEnabled = false
+                    raiseBetButton.alpha = 0.2
                 }
-                minimumBetLabel.text = "MINIMUM BET: \(tableData.minimumBet)"
             } else {
-                callCheckButton.setTitle("ALL IN", for: .normal)
-                raiseBetButton.setTitle("RAISE", for: .normal)
-                raiseBetButton.isEnabled = false
-                raiseBetButton.alpha = 0.2
-            }
-            
-            if chipsToMatchBet == 0 {
                 callCheckButton.setTitle("CHECK", for: .normal)
                 minimumBetLabel.text = "MINIMUM BET: \(tableData.minimumBet)"
-                if playerChips <= chipsToMatchBet {
-                    raiseBetButton.setTitle("ALL IN", for: .normal)
-                } else {
-                    raiseBetButton.setTitle("BET", for: .normal)
+                /// to była próba naprawienia buga 1, niestety konczy sie tym, ze powstaje ten sam bug co w video 'bug 2'.
+                if tableData.currentPlayer.isPlayerBigBlind == true && tableData.currentPlayer.playerChips <= tableData.minimumBet {
+                    if playerChips <= tableData.minimumBet {
+                        raiseBetButton.setTitle("ALL IN", for: .normal)
+                    } else {
+                            raiseBetButton.setTitle("BET", for: .normal)
+                    }
+                }
+                ///
+                else { // wywal ta linijke 'else' i dolny } i powyzszego dlugiego ifa (calego, z zawartoscia) zeby powrocic do poprzedniej wersji.
+                    if playerChips <= chipsToMatchBet {
+                        raiseBetButton.setTitle("ALL IN", for: .normal)
+                    } else {
+                        raiseBetButton.setTitle("BET", for: .normal)
+                    }
                 }
             }
+            // TO BYŁO NA PRÓBĘ, POPRZEDNIA WERSJA PONIŻEJ (ODKOMENTUJ ABY POWRÓCIC DO POPRZEDNIEJ WERSJI):
+            
+            
+            
+            
+//            let chipsToMatchBet = tableData.minimumBet - tableData.currentPlayer.playerBetInThisState
+//
+//            if  playerChips > tableData.minimumBet {
+//                callCheckButton.setTitle("CALL: \(chipsToMatchBet)", for: .normal)
+//                if playerChips > tableData.minimumBet * 2 {
+//                    raiseBetButton.setTitle("RAISE", for: .normal)
+//                } else {
+//                    raiseBetButton.setTitle("ALL IN", for: .normal)
+//                }
+//                minimumBetLabel.text = "MINIMUM BET: \(tableData.minimumBet)"
+//            } else {
+//                callCheckButton.setTitle("ALL IN", for: .normal)
+//                raiseBetButton.setTitle("RAISE", for: .normal)
+//                raiseBetButton.isEnabled = false
+//                raiseBetButton.alpha = 0.2
+//            }
+//
+//            if chipsToMatchBet == 0 {
+//                callCheckButton.setTitle("CHECK", for: .normal)
+//                minimumBetLabel.text = "MINIMUM BET: \(tableData.minimumBet)"
+//                if playerChips <= chipsToMatchBet {
+//                    raiseBetButton.setTitle("ALL IN", for: .normal)
+//                } else {
+//                    raiseBetButton.setTitle("BET", for: .normal)
+//                }
+//            }
         }
     }
     

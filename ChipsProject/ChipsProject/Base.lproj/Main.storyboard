@@ -588,12 +588,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ts-W3-fTE" customClass="RoundedButton" customModule="ChipsProject" customModuleProvider="target">
+                                <rect key="frame" x="20" y="413" width="374" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="NEW HAND"/>
+                                <connections>
+                                    <action selector="tapNewHandButton:" destination="HR1-es-TkA" eventType="touchUpInside" id="k9V-ZM-Thu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="c0z-Bm-1i0"/>
                     </view>
                     <connections>
                         <outlet property="OKButton" destination="ogU-wg-HLY" id="xj2-IY-wLb"/>
+                        <outlet property="newHandButton" destination="4Ts-W3-fTE" id="Spx-4d-X6A"/>
                         <outlet property="nextPlayerButton" destination="L8H-LS-OXq" id="CAt-gN-weA"/>
                         <outlet property="playerChipsLabel" destination="kOM-eO-4sd" id="Isu-5Q-znw"/>
                         <outlet property="playerNameLabel" destination="Lhw-NJ-mAJ" id="meq-kj-SHX"/>
