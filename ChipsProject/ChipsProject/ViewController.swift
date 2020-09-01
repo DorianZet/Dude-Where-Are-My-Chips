@@ -17,10 +17,6 @@ class ViewController: UIViewController {
         createParticles()
     }
     
-    @IBAction func tapPlayButton(_ sender: UIButton) {
-        performSegue(withIdentifier: "ChoosePlayersSegue", sender: sender)
-    }
-    
     @IBAction func tapSettingsButton(_ sender: UIButton) {
         performSegue(withIdentifier: "SettingsSegue", sender: sender)
     }

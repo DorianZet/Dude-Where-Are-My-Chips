@@ -266,6 +266,8 @@ class PokerTableViewController: UIViewController {
         tableData.currentPlayer.playerChips = playerChips
         tableData.currentPlayer.playerWentAllIn = true
         tableData.currentPlayer.playerActiveInHand = false
+//        wprowadzilem ta linijke, sprawdz czy teraz jest ok (check loop bug):
+        tableData.currentPlayer.playerMadeAMove = true
         checkIfAllPlayersWentAllIn()
         checkForNextState()
         newTurn()
@@ -405,6 +407,24 @@ class PokerTableViewController: UIViewController {
                 print ("bets not equal.")
             }
         }
+//        w tym miejscu wydrukuj wszystko (przenies printy sprawdzajace stan graczy itd. dodatkowo wydrukuj tych graczy, ktorzy sa oznaczeni jako 'playerHasMoved = true')
+        for eachPlayer in tableData.activePlayers {
+            print("\(eachPlayer.playerName) BET: \(eachPlayer.playerBet)")
+            print("\(eachPlayer.playerName) BET IN THIS STATE: \(eachPlayer.playerBetInThisState)")
+            print("\(eachPlayer.playerName) CHIPS: \(eachPlayer.playerChips)")
+        }
+        print("POT: \(tableData.potChips)")
+        print("allPlayersMoved = \(allPlayersMoved)")
+        print("allBetsAreZero = \(allBetsAreZero())")
+        print("allBetsAreEqual = \(allBetsAreEqual)")
+        for eachPlayer in tableData.activePlayers {
+            if eachPlayer.playerMadeAMove == true {
+                print("\(eachPlayer.playerName) moved.")
+            } else {
+                print("\(eachPlayer.playerName) hasn't moved yet.")
+            }
+        }
+        print("-----------")
     }
     
     func allBetsAreZero() -> Bool {
@@ -435,12 +455,12 @@ class PokerTableViewController: UIViewController {
             
             seeIfWeCanImmediatelyShowChooseWinnerControllerWith1PlayerLeft()
             
-            for eachPlayer in tableData.activePlayers {
-                print("\(eachPlayer.playerName) BET: \(eachPlayer.playerBet)")
-                print("\(eachPlayer.playerName) BET IN THIS STATE: \(eachPlayer.playerBetInThisState)")
-                print("\(eachPlayer.playerName) CHIPS: \(eachPlayer.playerChips)")
-            }
-            print("POT: \(tableData.potChips)")
+//            for eachPlayer in tableData.activePlayers {
+//                print("\(eachPlayer.playerName) BET: \(eachPlayer.playerBet)")
+//                print("\(eachPlayer.playerName) BET IN THIS STATE: \(eachPlayer.playerBetInThisState)")
+//                print("\(eachPlayer.playerName) CHIPS: \(eachPlayer.playerChips)")
+//            }
+//            print("POT: \(tableData.potChips)")
             
             tableData.newHandNeeded = false
         } else if tableData.nextStateNeeded == true {
@@ -538,10 +558,11 @@ class PokerTableViewController: UIViewController {
     
     func decideWhoStartsWhenNewHand() {
         let playingPlayers = tableData.activePlayers.filter { $0.playerActiveInHand }
-        let noOneHasMovedYet = playingPlayers.allSatisfy { ($0.playerMadeAMove) }
+        let noOneHasMovedYet = playingPlayers.allSatisfy { ($0.playerMadeAMove == false) }
+        // ^^^ tutaj chyba powinno byc false (wczesniej bylo true)
         
         if tableData.gameState == .preFlop && playingPlayers.count == 2 && noOneHasMovedYet {
-                tableData.currentPlayer = tableData.activePlayers[tableData.smallBlindPlayerIndex]
+            tableData.currentPlayer = tableData.activePlayers[tableData.smallBlindPlayerIndex]
             tableData.currentPlayerIndex = tableData.smallBlindPlayerIndex
         } else {
             var afterBigBlindPlayerIndex = tableData.bigBlindPlayerIndex + 1
@@ -697,16 +718,13 @@ class PokerTableViewController: UIViewController {
             } else {
                 callCheckButton.setTitle("CHECK", for: .normal)
                 minimumBetLabel.text = "MINIMUM BET: \(tableData.minimumBet)"
-                /// to była próba naprawienia buga 1, niestety konczy sie tym, ze powstaje ten sam bug co w video 'bug 2'.
                 if tableData.currentPlayer.isPlayerBigBlind == true && tableData.currentPlayer.playerChips <= tableData.minimumBet {
                     if playerChips <= tableData.minimumBet {
                         raiseBetButton.setTitle("ALL IN", for: .normal)
                     } else {
-                            raiseBetButton.setTitle("BET", for: .normal)
+                        raiseBetButton.setTitle("BET", for: .normal)
                     }
-                }
-                ///
-                else { // wywal ta linijke 'else' i dolny } i powyzszego dlugiego ifa (calego, z zawartoscia) zeby powrocic do poprzedniej wersji.
+                } else {
                     if playerChips <= chipsToMatchBet {
                         raiseBetButton.setTitle("ALL IN", for: .normal)
                     } else {

@@ -14,7 +14,7 @@ class RoundedLabel: UILabel {
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.borderWidth = 2
         self.clipsToBounds = true
-        self.backgroundColor = .clear
+        self.backgroundColor = .systemYellow
         self.textColor = .black
     }
 }

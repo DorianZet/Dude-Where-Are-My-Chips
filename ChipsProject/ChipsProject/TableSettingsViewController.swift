@@ -10,6 +10,13 @@ import UIKit
 
 class TableSettingsViewController: UIViewController {
     var tableData = TableData.shared
+    let maximumNumberOfPlayers = 9
+    let minimumNumberOfPlayers = 2
+    var currentNumberOfPlayers = 2
+    
+    @IBOutlet var numberOfPlayersLabel: UILabel!
+    @IBOutlet var plusOnePlayersButton: UIButton!
+    @IBOutlet var minusOnePlayersButton: UIButton!
     
     @IBOutlet var smallChips: RoundedButton!
     @IBOutlet var mediumChips: RoundedButton!
@@ -23,14 +30,45 @@ class TableSettingsViewController: UIViewController {
     
     @IBOutlet var backButton: RoundedButton!
     @IBOutlet var OKButton: RoundedButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let buttons = [smallChips, mediumChips, largeChips, oneBlind, fiveBlind, tenBlind, namePlayers, backButton, OKButton]
+        configureButtons()
+        
+        let buttons = [minusOnePlayersButton, plusOnePlayersButton, smallChips, mediumChips, largeChips, oneBlind, fiveBlind, tenBlind, namePlayers, backButton, OKButton]
         
         for eachButton in buttons {
             eachButton?.titleLabel?.font = UIFont(name: "Pixel Emulator", size: 17)
         }
+        
+        numberOfPlayersLabel.font = UIFont(name: "Pixel Emulator", size: 17)
+        tableData.numberOfPlayers = currentNumberOfPlayers
+    }
+    
+    @IBAction func tapMinusOnePlayersButton(_ sender: UIButton) {
+        currentNumberOfPlayers -= 1
+        if tableData.playerNames != ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"] {
+            tableData.playerNames = ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"]
+        }
+
+        if currentNumberOfPlayers < minimumNumberOfPlayers {
+            currentNumberOfPlayers = maximumNumberOfPlayers
+        }
+        tableData.numberOfPlayers = currentNumberOfPlayers
+        numberOfPlayersLabel.text = "\(currentNumberOfPlayers) PLAYERS"
+    }
+    @IBAction func tapPlusOnePlayersButton(_ sender: UIButton) {
+        currentNumberOfPlayers += 1
+
+        if tableData.playerNames != ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"] {
+            tableData.playerNames = ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"]
+        }
+
+        if currentNumberOfPlayers > maximumNumberOfPlayers {
+            currentNumberOfPlayers = minimumNumberOfPlayers
+        }
+        tableData.numberOfPlayers = currentNumberOfPlayers
+        numberOfPlayersLabel.text = "\(currentNumberOfPlayers) PLAYERS"
     }
     
     @IBAction func chooseSmallChips(_ sender: UIButton) {
@@ -132,6 +170,15 @@ class TableSettingsViewController: UIViewController {
                 textField.font = UIFont(name: "Pixel Emulator", size: 10)
             })
         }
+    }
+    
+    func configureButtons() {
+        minusOnePlayersButton.layer.borderColor = UIColor.clear.cgColor
+        minusOnePlayersButton.layer.borderWidth = 0
+        minusOnePlayersButton.backgroundColor = .clear
+        plusOnePlayersButton.layer.borderColor = UIColor.clear.cgColor
+        plusOnePlayersButton.layer.borderWidth = 0
+        plusOnePlayersButton.backgroundColor = .clear
     }
 }
 

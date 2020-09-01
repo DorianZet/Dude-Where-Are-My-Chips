@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		612551E524E2BCBC00DDAF9B /* RoundedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */; };
-		612613A224F527380084D729 /* PixelEmulator-xq08.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 612613A124F527380084D729 /* PixelEmulator-xq08.ttf */; };
 		6126394B24D8869800B15A0C /* TableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6126394A24D8869800B15A0C /* TableData.swift */; };
 		6126394D24D886BF00B15A0C /* PlayerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6126394C24D886BF00B15A0C /* PlayerData.swift */; };
 		6126394F24D888B200B15A0C /* TableSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6126394E24D888B200B15A0C /* TableSettingsViewController.swift */; };
@@ -26,6 +25,7 @@
 		612D721D24D42E01004BF254 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 612D721B24D42E01004BF254 /* LaunchScreen.storyboard */; };
 		612D722824D42E01004BF254 /* ChipsProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D722724D42E01004BF254 /* ChipsProjectTests.swift */; };
 		612D723324D42E01004BF254 /* ChipsProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D723224D42E01004BF254 /* ChipsProjectUITests.swift */; };
+		6136ADE724FE788E00330AF1 /* PixelEmulator-xq08.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6136ADE624FE788D00330AF1 /* PixelEmulator-xq08.ttf */; };
 		61FD1CAB24E143DF007EC8B3 /* ChooseWinnerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD1CAA24E143DF007EC8B3 /* ChooseWinnerController.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +48,6 @@
 
 /* Begin PBXFileReference section */
 		612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedLabel.swift; sourceTree = "<group>"; };
-		612613A124F527380084D729 /* PixelEmulator-xq08.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "PixelEmulator-xq08.ttf"; path = "../../Project17/Project17/PixelEmulator-xq08.ttf"; sourceTree = "<group>"; };
 		6126394A24D8869800B15A0C /* TableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableData.swift; sourceTree = SOURCE_ROOT; };
 		6126394C24D886BF00B15A0C /* PlayerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerData.swift; sourceTree = "<group>"; };
 		6126394E24D888B200B15A0C /* TableSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSettingsViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		612D722E24D42E01004BF254 /* ChipsProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChipsProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		612D723224D42E01004BF254 /* ChipsProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsProjectUITests.swift; sourceTree = "<group>"; };
 		612D723424D42E01004BF254 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6136ADE624FE788D00330AF1 /* PixelEmulator-xq08.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelEmulator-xq08.ttf"; sourceTree = SOURCE_ROOT; };
 		61FD1CAA24E143DF007EC8B3 /* ChooseWinnerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWinnerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,7 +141,7 @@
 				612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */,
 				612CFDD924F6ADD400497925 /* CountingPotLabel.swift */,
 				612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */,
-				612613A124F527380084D729 /* PixelEmulator-xq08.ttf */,
+				6136ADE624FE788D00330AF1 /* PixelEmulator-xq08.ttf */,
 			);
 			path = ChipsProject;
 			sourceTree = "<group>";
@@ -271,7 +271,7 @@
 				612D721D24D42E01004BF254 /* LaunchScreen.storyboard in Resources */,
 				612D721A24D42E01004BF254 /* Assets.xcassets in Resources */,
 				612D721824D42DFD004BF254 /* Main.storyboard in Resources */,
-				612613A224F527380084D729 /* PixelEmulator-xq08.ttf in Resources */,
+				6136ADE724FE788E00330AF1 /* PixelEmulator-xq08.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
