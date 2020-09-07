@@ -14,18 +14,26 @@ class TableSettingsViewController: UIViewController {
     let minimumNumberOfPlayers = 2
     var currentNumberOfPlayers = 2
     
+    let maximumStartingChips = 10000
+    let minimumStartingChips = 500
+    var currentStartingChips = 500
+    
+    let maximumSmallBlind = 100
+    let minimumSmallBlind = 5
+    var currentSmallBlind = 5
+    
     @IBOutlet var numberOfPlayersLabel: UILabel!
     @IBOutlet var plusOnePlayersButton: UIButton!
     @IBOutlet var minusOnePlayersButton: UIButton!
     
-    @IBOutlet var smallChips: RoundedButton!
-    @IBOutlet var mediumChips: RoundedButton!
-    @IBOutlet var largeChips: RoundedButton!
+    @IBOutlet var startingChipsLabel: RoundedLabel!
+    @IBOutlet var plusChipsButton: UIButton!
+    @IBOutlet var minusChipsButton: UIButton!
     
-    @IBOutlet var oneBlind: RoundedButton!
-    @IBOutlet var fiveBlind: RoundedButton!
-    @IBOutlet var tenBlind: RoundedButton!
-    
+    @IBOutlet var blindsLabel: RoundedLabel!
+    @IBOutlet var plusBlindsButton: UIButton!
+    @IBOutlet var minusBlindsButton: UIButton!
+        
     @IBOutlet var namePlayers: RoundedButton!
     
     @IBOutlet var backButton: RoundedButton!
@@ -33,16 +41,16 @@ class TableSettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureButtons()
         
-        let buttons = [minusOnePlayersButton, plusOnePlayersButton, smallChips, mediumChips, largeChips, oneBlind, fiveBlind, tenBlind, namePlayers, backButton, OKButton]
+        numberOfPlayersLabel.text = "\(currentNumberOfPlayers) PLAYERS"
+        startingChipsLabel.text = "500"
+        blindsLabel.text = "5/10"
         
-        for eachButton in buttons {
-            eachButton?.titleLabel?.font = UIFont(name: "Pixel Emulator", size: 17)
-        }
-        
-        numberOfPlayersLabel.font = UIFont(name: "Pixel Emulator", size: 17)
-        tableData.numberOfPlayers = currentNumberOfPlayers
+        tableData.numberOfPlayers = minimumNumberOfPlayers
+        tableData.startingChips = minimumStartingChips
+        tableData.smallBlind = minimumSmallBlind
     }
     
     @IBAction func tapMinusOnePlayersButton(_ sender: UIButton) {
@@ -71,30 +79,43 @@ class TableSettingsViewController: UIViewController {
         numberOfPlayersLabel.text = "\(currentNumberOfPlayers) PLAYERS"
     }
     
-    @IBAction func chooseSmallChips(_ sender: UIButton) {
-        highlightChipsButtonSelection(sender: sender)
-        tableData.startingChips = 500
+    
+    @IBAction func tapMinusChipsButton(_ sender: Any) {
+        currentStartingChips -= 500
+
+        if currentStartingChips < minimumStartingChips {
+            currentStartingChips = maximumStartingChips
+        }
+        tableData.startingChips = currentStartingChips
+        startingChipsLabel.text = "\(currentStartingChips)"
     }
-    @IBAction func chooseMediumChips(_ sender: UIButton) {
-        highlightChipsButtonSelection(sender: sender)
-        tableData.startingChips = 1000
-    }
-    @IBAction func chooseLargeChips(_ sender: UIButton) {
-        highlightChipsButtonSelection(sender: sender)
-        tableData.startingChips = 2000
+    @IBAction func tapPlusChipsButton(_ sender: Any) {
+        currentStartingChips += 500
+
+        if currentStartingChips > maximumStartingChips {
+            currentStartingChips = minimumStartingChips
+        }
+        tableData.startingChips = currentStartingChips
+        startingChipsLabel.text = "\(currentStartingChips)"
     }
     
-    @IBAction func chooseOneBlind(_ sender: UIButton) {
-        highlightSmallBlindButtonSelection(sender: sender)
-        tableData.smallBlind = 1
+    @IBAction func tapMinusBlindsButton(_ sender: Any) {
+        currentSmallBlind -= 5
+
+        if currentSmallBlind < minimumSmallBlind {
+            currentSmallBlind = maximumSmallBlind
+        }
+        tableData.smallBlind = currentSmallBlind
+        blindsLabel.text = "\(currentSmallBlind)/\(currentSmallBlind * 2)"
     }
-    @IBAction func chooseFiveBlind(_ sender: UIButton) {
-        highlightSmallBlindButtonSelection(sender: sender)
-        tableData.smallBlind = 5
-    }
-    @IBAction func chooseTenBlind(_ sender: UIButton) {
-        highlightSmallBlindButtonSelection(sender: sender)
-        tableData.smallBlind = 10
+    @IBAction func tapPlusBlindsButton(_ sender: Any) {
+        currentSmallBlind += 5
+
+        if currentSmallBlind > maximumSmallBlind {
+            currentSmallBlind = minimumSmallBlind
+        }
+        tableData.smallBlind = currentSmallBlind
+        blindsLabel.text = "\(currentSmallBlind)/\(currentSmallBlind * 2)"
     }
     
     @IBAction func chooseNamePlayers(_ sender: UIButton) {
@@ -135,32 +156,7 @@ class TableSettingsViewController: UIViewController {
         }
         
     }
-    
-    
-    func highlightChipsButtonSelection(sender: UIButton) {
-        let allButtons = [smallChips, mediumChips, largeChips]
-        
-        for button in allButtons {
-            button?.layer.borderColor = UIColor.black.cgColor
-            button?.layer.borderWidth = 2
-        }
-        
-        sender.layer.borderColor = UIColor.systemRed.cgColor
-        sender.layer.borderWidth = 4
-    }
-    
-    func highlightSmallBlindButtonSelection(sender: UIButton) {
-        let allButtons = [oneBlind, fiveBlind, tenBlind]
-        
-        for button in allButtons {
-            button?.layer.borderColor = UIColor.black.cgColor
-            button?.layer.borderWidth = 2
-        }
-        
-        sender.layer.borderColor = UIColor.systemRed.cgColor
-        sender.layer.borderWidth = 4
-    }
-    
+
     func addPlayersTextFields(for alertController: UIAlertController) {
         let numberOfPlayers = tableData.numberOfPlayers
         
@@ -173,12 +169,25 @@ class TableSettingsViewController: UIViewController {
     }
     
     func configureButtons() {
-        minusOnePlayersButton.layer.borderColor = UIColor.clear.cgColor
-        minusOnePlayersButton.layer.borderWidth = 0
-        minusOnePlayersButton.backgroundColor = .clear
-        plusOnePlayersButton.layer.borderColor = UIColor.clear.cgColor
-        plusOnePlayersButton.layer.borderWidth = 0
-        plusOnePlayersButton.backgroundColor = .clear
+        let plusAndMinusButtons = [minusOnePlayersButton, plusOnePlayersButton, minusBlindsButton, plusBlindsButton, minusChipsButton, plusChipsButton]
+        
+        for eachButton in plusAndMinusButtons {
+            eachButton?.layer.borderColor = UIColor.clear.cgColor
+            eachButton?.layer.borderWidth = 0
+            eachButton?.backgroundColor = .clear
+        }
+        
+        let allButtons = [minusOnePlayersButton, plusOnePlayersButton, plusChipsButton, minusChipsButton, plusBlindsButton, minusBlindsButton, namePlayers, backButton, OKButton]
+        
+        for eachButton in allButtons {
+            eachButton?.titleLabel?.font = UIFont(name: "Pixel Emulator", size: 17)
+        }
+        
+        let labels = [numberOfPlayersLabel, blindsLabel, startingChipsLabel]
+        
+        for eachLabel in labels {
+            eachLabel?.font = UIFont(name: "Pixel Emulator", size: 17)
+        }
     }
 }
 

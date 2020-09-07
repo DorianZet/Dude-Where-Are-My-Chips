@@ -56,6 +56,8 @@ class PokerTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        callCheckButton.titleLabel!.adjustsFontSizeToFitWidth = true
+        
         hideAllLabelsAndButtons()
 
         changeFontToPixel()

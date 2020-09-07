@@ -9,7 +9,7 @@
 import UIKit
 
 class ChooseWinnerController: UIViewController {
-    @IBOutlet var titleLabel: UILabel! 
+    @IBOutlet var titleLabel: UILabel!
     
     @IBOutlet var previousPlayerButton: UIButton!
     @IBOutlet var nextPlayerButton: UIButton!

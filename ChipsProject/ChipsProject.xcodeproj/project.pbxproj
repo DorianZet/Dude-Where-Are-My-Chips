@@ -13,7 +13,6 @@
 		6126394F24D888B200B15A0C /* TableSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6126394E24D888B200B15A0C /* TableSettingsViewController.swift */; };
 		612A2BE324D8641B00DAC6E8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A2BE224D8641B00DAC6E8 /* SettingsViewController.swift */; };
 		612A2BE524D870A500DAC6E8 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A2BE424D870A500DAC6E8 /* RoundedButton.swift */; };
-		612A2BE724D8750A00DAC6E8 /* ChoosePlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612A2BE624D8750A00DAC6E8 /* ChoosePlayersViewController.swift */; };
 		612B1C8124D940690058AC81 /* PokerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612B1C8024D940690058AC81 /* PokerTableViewController.swift */; };
 		612CFDD824F6A63100497925 /* CountingPlayerChipsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */; };
 		612CFDDA24F6ADD400497925 /* CountingPotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612CFDD924F6ADD400497925 /* CountingPotLabel.swift */; };
@@ -25,7 +24,7 @@
 		612D721D24D42E01004BF254 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 612D721B24D42E01004BF254 /* LaunchScreen.storyboard */; };
 		612D722824D42E01004BF254 /* ChipsProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D722724D42E01004BF254 /* ChipsProjectTests.swift */; };
 		612D723324D42E01004BF254 /* ChipsProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D723224D42E01004BF254 /* ChipsProjectUITests.swift */; };
-		6136ADE724FE788E00330AF1 /* PixelEmulator-xq08.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6136ADE624FE788D00330AF1 /* PixelEmulator-xq08.ttf */; };
+		6136ADE924FE790900330AF1 /* PixelEmulator-xq08.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6136ADE824FE790900330AF1 /* PixelEmulator-xq08.ttf */; };
 		61FD1CAB24E143DF007EC8B3 /* ChooseWinnerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD1CAA24E143DF007EC8B3 /* ChooseWinnerController.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +52,6 @@
 		6126394E24D888B200B15A0C /* TableSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableSettingsViewController.swift; sourceTree = "<group>"; };
 		612A2BE224D8641B00DAC6E8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		612A2BE424D870A500DAC6E8 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
-		612A2BE624D8750A00DAC6E8 /* ChoosePlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePlayersViewController.swift; sourceTree = "<group>"; };
 		612B1C8024D940690058AC81 /* PokerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokerTableViewController.swift; sourceTree = "<group>"; };
 		612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingPlayerChipsLabel.swift; sourceTree = "<group>"; };
 		612CFDD924F6ADD400497925 /* CountingPotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingPotLabel.swift; sourceTree = "<group>"; };
@@ -71,7 +69,7 @@
 		612D722E24D42E01004BF254 /* ChipsProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChipsProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		612D723224D42E01004BF254 /* ChipsProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsProjectUITests.swift; sourceTree = "<group>"; };
 		612D723424D42E01004BF254 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6136ADE624FE788D00330AF1 /* PixelEmulator-xq08.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelEmulator-xq08.ttf"; sourceTree = SOURCE_ROOT; };
+		6136ADE824FE790900330AF1 /* PixelEmulator-xq08.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelEmulator-xq08.ttf"; sourceTree = SOURCE_ROOT; };
 		61FD1CAA24E143DF007EC8B3 /* ChooseWinnerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWinnerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,7 +125,6 @@
 				612D721224D42DFD004BF254 /* SceneDelegate.swift */,
 				612D721424D42DFD004BF254 /* ViewController.swift */,
 				612A2BE224D8641B00DAC6E8 /* SettingsViewController.swift */,
-				612A2BE624D8750A00DAC6E8 /* ChoosePlayersViewController.swift */,
 				6126394E24D888B200B15A0C /* TableSettingsViewController.swift */,
 				612B1C8024D940690058AC81 /* PokerTableViewController.swift */,
 				61FD1CAA24E143DF007EC8B3 /* ChooseWinnerController.swift */,
@@ -141,7 +138,7 @@
 				612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */,
 				612CFDD924F6ADD400497925 /* CountingPotLabel.swift */,
 				612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */,
-				6136ADE624FE788D00330AF1 /* PixelEmulator-xq08.ttf */,
+				6136ADE824FE790900330AF1 /* PixelEmulator-xq08.ttf */,
 			);
 			path = ChipsProject;
 			sourceTree = "<group>";
@@ -271,7 +268,7 @@
 				612D721D24D42E01004BF254 /* LaunchScreen.storyboard in Resources */,
 				612D721A24D42E01004BF254 /* Assets.xcassets in Resources */,
 				612D721824D42DFD004BF254 /* Main.storyboard in Resources */,
-				6136ADE724FE788E00330AF1 /* PixelEmulator-xq08.ttf in Resources */,
+				6136ADE924FE790900330AF1 /* PixelEmulator-xq08.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,7 +305,6 @@
 				612CFDDA24F6ADD400497925 /* CountingPotLabel.swift in Sources */,
 				6126394F24D888B200B15A0C /* TableSettingsViewController.swift in Sources */,
 				6126394B24D8869800B15A0C /* TableData.swift in Sources */,
-				612A2BE724D8750A00DAC6E8 /* ChoosePlayersViewController.swift in Sources */,
 				612A2BE324D8641B00DAC6E8 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
