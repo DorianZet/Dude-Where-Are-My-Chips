@@ -1,0 +1,6 @@
+framework module Pods_ChipsProject {
+  umbrella header "Pods-ChipsProject-umbrella.h"
+
+  export *
+  module * { export * }
+}
