@@ -66,8 +66,6 @@ class CountingPotLabel: UILabel {
         }
         
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(CountingPotLabel.updateValue), userInfo: nil, repeats: true)
-        
-        
     }
     
     @objc func updateValue() {
@@ -85,15 +83,9 @@ class CountingPotLabel: UILabel {
                 self.updateText(value: self.currentCounterValue)
             }
         }
-        
-        
-        
-        
     }
     
-    
     func updateText(value: Float) {
-        
         switch counterType! {
         case .Int:
             self.text = "POT: \(Int(value))"
@@ -101,7 +93,6 @@ class CountingPotLabel: UILabel {
             self.text = String(format: "%.2f", value)
         }
     }
-    
     
     func updateCounter(counterValue: Float) -> Float {
         switch counterAnimationType! {
@@ -113,7 +104,6 @@ class CountingPotLabel: UILabel {
             return 1.0 - powf(1.0 - counterValue, counterVelocity)
         }
     }
-    
     
     func invalidateTimer() {
         timer?.invalidate()

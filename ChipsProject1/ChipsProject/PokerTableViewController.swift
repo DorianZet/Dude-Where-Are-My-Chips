@@ -45,7 +45,15 @@ class PokerTableViewController: UIViewController {
     @IBOutlet var infoButton: UIButton!
     @IBOutlet var soundButton: RoundedButton!
     @IBOutlet var potLabel: UILabel!
+    @IBOutlet var handStateView: UIView!
     @IBOutlet var handStateLabel: UILabel!
+    @IBOutlet var cardsStackView: UIStackView!
+    @IBOutlet var card1: UIImageView!
+    @IBOutlet var card2: UIImageView!
+    @IBOutlet var card3: UIImageView!
+    @IBOutlet var card4: UIImageView!
+    @IBOutlet var card5: UIImageView!
+
     @IBOutlet var currentBetLabel: UILabel!
     @IBOutlet var playerChipsLabel: UILabel!
     @IBOutlet var minimumBetLabel: UILabel!
@@ -61,7 +69,8 @@ class PokerTableViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if tableData.gameState == .preFlop { // we give a condition that the animation (with the data changes along) will go only if the game state is in pre-flop. The reason for this is that there was a crash when we went back to main menu when the game was won by one player. on its way to the root screen, the code tried to initialize animateHandStateLabel(for:) in PokerTableVC with the code inside, particularly configureTurn(), which tried to operate on tableData which could have wrong data, e.g. 1 player left in game. We ensure then that the code will be executed ONLY at the beginning of a hand.
-            animateHandStateLabel(for: "PRE-FLOP")
+            cardsStackView.isHidden = true
+            animateHandStateView(for: "PRE-FLOP")
         }
     }
     
@@ -80,15 +89,17 @@ class PokerTableViewController: UIViewController {
         callCheckButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         configureTopButtons()
-    
-        hideAllLabelsAndButtons()
-
-        changeFontToPixel()
         
+        setCardsImage()
+        
+        hideAllLabelsAndButtons()
+        handStateLabel.adjustsFontSizeToFitWidth = true
+        handStateLabel.sizeToFit()
+        changeFontToPixel()
         setThumbImage()
 
         hideSliderAndButtons()
-                
+                              
         tableData.newHandNeeded = true
         newHand()
     }
@@ -98,7 +109,6 @@ class PokerTableViewController: UIViewController {
         UIView.animate(withDuration: 0.2) {
             self.view.alpha = 0.8
         }
-        
         let pm = PMAlertController(title: "EXIT TO MAIN MENU?", description: nil, image: nil, style: .alert)
         if #available(iOS 13.0, *) {
             pm.overrideUserInterfaceStyle = .dark
@@ -472,7 +482,11 @@ class PokerTableViewController: UIViewController {
             callCheckButton.setTitle("CHECK", for: .normal)
             raiseBetButton.setTitle("BET", for: .normal)
             if tableData.nextStateNeeded == true {
-                animateHandStateLabel(for: "THE FLOP")
+                cardsStackView.isHidden = false
+                card5.isHidden = true
+                card4.isHidden = true
+                
+                animateHandStateView(for: "THE FLOP")
                 print("THE FLOP")
             } else {
                 configureTurn()
@@ -481,7 +495,10 @@ class PokerTableViewController: UIViewController {
             callCheckButton.setTitle("CHECK", for: .normal)
             raiseBetButton.setTitle("BET", for: .normal)
             if tableData.nextStateNeeded == true {
-                animateHandStateLabel(for: "THE TURN")
+                cardsStackView.isHidden = false
+                card5.isHidden = true
+                card4.isHidden = false
+                animateHandStateView(for: "THE TURN")
                 print("THE TURN")
             } else {
                 configureTurn()
@@ -490,14 +507,14 @@ class PokerTableViewController: UIViewController {
             callCheckButton.setTitle("CHECK", for: .normal)
             raiseBetButton.setTitle("BET", for: .normal)
             if tableData.nextStateNeeded == true {
-                animateHandStateLabel(for: "THE RIVER")
+                card5.isHidden = false
+                animateHandStateView(for: "THE RIVER")
                 print("THE RIVER")
             } else {
                 configureTurn()
             }
         } else if tableData.gameState == GameState.finishHand {
             // finish the hand and move to the next one
-            // show winning screen, choose the player, add the pot chips to his chips, check all activePlayers - if they have 0 chips, remove them from activePlayers array, and turn on a new hand.
             safelyShowChooseWinnerController()
             print("SHOWING THE HAND FINISH SCREEN")
         }
@@ -764,21 +781,21 @@ class PokerTableViewController: UIViewController {
         }
     }
     
-    func animateHandStateLabel(for state: String) {
+    func animateHandStateView(for state: String) {
         view.isUserInteractionEnabled = false
         
-        handStateLabel.isHidden = false
+        handStateView.isHidden = false
+        handStateView.backgroundColor = .darkGray
+        handStateView.layer.borderWidth = 4
+        handStateView.layer.borderColor = UIColor.black.cgColor
+        handStateView.layer.masksToBounds = true
+        handStateView.alpha = 0
+        handStateView.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
         handStateLabel.text = state
-        handStateLabel.backgroundColor = .darkGray
-        handStateLabel.layer.borderWidth = 4
-        handStateLabel.layer.borderColor = UIColor.black.cgColor
-        handStateLabel.layer.masksToBounds = true
-        handStateLabel.alpha = 0
-        handStateLabel.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
-        
+
         UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 35, options: [], animations: {
-            self.handStateLabel.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.handStateLabel.alpha = 1
+            self.handStateView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.handStateView.alpha = 1
         }) { _ in
             if self.tableData.gameState == .preFlop {
                 self.showAllLabelsAndButtons()
@@ -791,10 +808,10 @@ class PokerTableViewController: UIViewController {
         }
         
         UIView.animate(withDuration: 0.3, delay: 2.0, usingSpringWithDamping: 10, initialSpringVelocity: 12, options: [], animations: {
-            self.handStateLabel.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
-            self.handStateLabel.alpha = 0
+            self.handStateView.transform = CGAffineTransform(scaleX: 0.0001, y: 0.0001)
+            self.handStateView.alpha = 0
         }) { _ in
-            self.handStateLabel.isHidden = true
+            self.handStateView.isHidden = true
             self.view.isUserInteractionEnabled = true
         }
     }
@@ -837,6 +854,7 @@ class PokerTableViewController: UIViewController {
             if chipsToMatchBet != 0 && !noOnePutBet {
                 if  playerChips > chipsToMatchBet {
                     callCheckButton.setTitle("CALL: \(chipsToMatchBet)", for: .normal)
+                    
                     if playerChips > tableData.minimumBet * 2 {
                         raiseBetButton.setTitle("RAISE", for: .normal)
                     } else {
@@ -872,15 +890,16 @@ class PokerTableViewController: UIViewController {
             let playersActiveInHand = playingPlayers.filter { $0.playerActiveInHand == true }
 
             if chipsToMatchBet != 0 {
-//                if  playerChips > tableData.minimumBet { <- wczesniej bylo to
                 if  playerChips > chipsToMatchBet {
                     callCheckButton.setTitle("CALL: \(chipsToMatchBet)", for: .normal)
+                    callCheckButton.contentHorizontalAlignment = .center
+                    callCheckButton.titleLabel?.textAlignment = .center
                     if playerChips > tableData.minimumBet * 2 {
                         raiseBetButton.setTitle("RAISE", for: .normal)
                     } else {
                         raiseBetButton.setTitle("ALL IN", for: .normal)
                     }
-                    // jak sie uporasz z loop bugiem (20.09), to sprawdz czy to dziala. Istnieje szansa, ze cos sie przez to zepsuje, wiec miej na uwadze te linijki ponizej:
+                    
                     if playersActiveInHand.count == 1 {
                         raiseBetButton.setTitle("RAISE", for: .normal)
                         raiseBetButton.isEnabled = false
@@ -968,7 +987,7 @@ class PokerTableViewController: UIViewController {
                 eachButton?.titleLabel?.font = UIFont(name: "Pixel Emulator", size: 14)
             }
             
-            handStateLabel.font = UIFont(name: "Pixel Emulator", size: 80)
+            handStateLabel.font = UIFont(name: "Pixel Emulator", size: 64)
             handStateLabel.textColor = .systemYellow
         } else {
             for eachLabel in allBigLabels {
@@ -1136,6 +1155,32 @@ class PokerTableViewController: UIViewController {
         }
     }
     
+    func setCardsImage() {
+        let defaults = UserDefaults.standard
+        let version = defaults.string(forKey: "version")
+        let allCards = [card1, card2, card3, card4, card5]
+        
+        if version == "ukChips" {
+            if let cardImage = UIImage(named: "chipCardUK") {
+                for card in allCards {
+                    card?.image = cardImage
+                }
+            }
+        } else if version == "usChips" {
+            if let cardImage = UIImage(named: "chipCardUS") {
+                for card in allCards {
+                    card?.image = cardImage
+                }
+            }
+        } else {
+            if let cardImage = UIImage(named: "chipCardUS") {
+                for card in allCards {
+                    card?.image = cardImage
+                }
+            }
+        }
+    }
+    
     func playSound(for fileString: String) {
         if soundOn == true {
             let path = Bundle.main.path(forResource: fileString, ofType: nil)
@@ -1150,7 +1195,7 @@ class PokerTableViewController: UIViewController {
                     print("couldn't load the file \(fileString)")
                 }
             } else {
-                print("path couldnt be found")
+                print("\(fileString) path couldn't be found")
             }
         }
     }

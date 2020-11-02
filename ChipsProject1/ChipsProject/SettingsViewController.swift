@@ -82,7 +82,6 @@ class SettingsViewController: UIViewController {
             titleLabel.font = UIFont(name: "PixelEmulator", size: 33)
             subtitleLabel.font = UIFont(name: "PixelEmulator", size: 19)
             backButton.titleLabel?.font = UIFont(name: "PixelEmulator", size: 25)
-
         }
     }
     

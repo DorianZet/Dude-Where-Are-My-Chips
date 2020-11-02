@@ -58,8 +58,6 @@ class CountingPlayerChipsLabel: UILabel {
         
         invalidateTimer()
         
-        
-        
         if duration == 0 {
             updateText(value: toValue)
             return
@@ -83,12 +81,7 @@ class CountingPlayerChipsLabel: UILabel {
                 self.updateText(value: self.currentCounterValue)
             }
         }
-        
-        
-        
-        
     }
-    
     
     func updateText(value: Float) {
         
@@ -100,7 +93,6 @@ class CountingPlayerChipsLabel: UILabel {
         }
     }
     
-    
     func updateCounter(counterValue: Float) -> Float {
         switch counterAnimationType! {
         case .Linear:
@@ -111,7 +103,6 @@ class CountingPlayerChipsLabel: UILabel {
             return 1.0 - powf(1.0 - counterValue, counterVelocity)
         }
     }
-    
     
     func invalidateTimer() {
         timer?.invalidate()

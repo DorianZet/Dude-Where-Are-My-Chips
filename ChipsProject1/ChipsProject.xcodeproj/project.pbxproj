@@ -31,7 +31,6 @@
 		612BB1D225373D16006E0053 /* countLabel.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 612BB1D025373D16006E0053 /* countLabel.aiff */; };
 		612BB1DA25375070006E0053 /* check.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 612BB1D925375070006E0053 /* check.aiff */; };
 		612CFD5025441D3C00CC379C /* HandStateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612CFD4F25441D3C00CC379C /* HandStateLabel.swift */; };
-		612CFD7625442E2E00CC379C /* chipsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 612CFD7525442E2E00CC379C /* chipsIcon.png */; };
 		612CFDD824F6A63100497925 /* CountingPlayerChipsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */; };
 		612CFDDA24F6ADD400497925 /* CountingPotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612CFDD924F6ADD400497925 /* CountingPotLabel.swift */; };
 		612D721124D42DFD004BF254 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D721024D42DFD004BF254 /* AppDelegate.swift */; };
@@ -44,6 +43,7 @@
 		612D723324D42E01004BF254 /* ChipsProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D723224D42E01004BF254 /* ChipsProjectUITests.swift */; };
 		6136ADE924FE790900330AF1 /* PixelEmulator-xq08.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6136ADE824FE790900330AF1 /* PixelEmulator-xq08.ttf */; };
 		61B14241250F7A1500CCF7B1 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B14240250F7A1500CCF7B1 /* DrawViewController.swift */; };
+		61DE9DD92549D53400E715FD /* chipsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61DE9DD82549D53400E715FD /* chipsIcon.png */; };
 		61F9A83D2512A04B00433363 /* PlusMinusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F9A83C2512A04B00433363 /* PlusMinusButton.swift */; };
 		61FD1CAB24E143DF007EC8B3 /* ChooseWinnerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FD1CAA24E143DF007EC8B3 /* ChooseWinnerController.swift */; };
 		8D68CEA3C0405BFD40DAFE2C /* Pods_ChipsProject_ChipsProjectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED81D82539CC1751D68E5669 /* Pods_ChipsProject_ChipsProjectUITests.framework */; };
@@ -97,7 +97,6 @@
 		612BB1D025373D16006E0053 /* countLabel.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = countLabel.aiff; sourceTree = "<group>"; };
 		612BB1D925375070006E0053 /* check.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = check.aiff; sourceTree = "<group>"; };
 		612CFD4F25441D3C00CC379C /* HandStateLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandStateLabel.swift; sourceTree = "<group>"; };
-		612CFD7525442E2E00CC379C /* chipsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chipsIcon.png; sourceTree = SOURCE_ROOT; };
 		612CFDD724F6A63100497925 /* CountingPlayerChipsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingPlayerChipsLabel.swift; sourceTree = "<group>"; };
 		612CFDD924F6ADD400497925 /* CountingPotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountingPotLabel.swift; sourceTree = "<group>"; };
 		612D720D24D42DFD004BF254 /* Dude, Where Are My Chips?.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dude, Where Are My Chips?.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +115,7 @@
 		612D723424D42E01004BF254 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6136ADE824FE790900330AF1 /* PixelEmulator-xq08.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelEmulator-xq08.ttf"; sourceTree = SOURCE_ROOT; };
 		61B14240250F7A1500CCF7B1 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
+		61DE9DD82549D53400E715FD /* chipsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chipsIcon.png; sourceTree = SOURCE_ROOT; };
 		61F9A83C2512A04B00433363 /* PlusMinusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusMinusButton.swift; sourceTree = "<group>"; };
 		61FD1CAA24E143DF007EC8B3 /* ChooseWinnerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWinnerController.swift; sourceTree = "<group>"; };
 		712ECE076E0C10F5354EF878 /* Pods-ChipsProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChipsProject.release.xcconfig"; path = "Target Support Files/Pods-ChipsProject/Pods-ChipsProject.release.xcconfig"; sourceTree = "<group>"; };
@@ -244,8 +244,8 @@
 				612551E424E2BCBC00DDAF9B /* RoundedLabel.swift */,
 				612CFD4F25441D3C00CC379C /* HandStateLabel.swift */,
 				6136ADE824FE790900330AF1 /* PixelEmulator-xq08.ttf */,
-				612CFD7525442E2E00CC379C /* chipsIcon.png */,
 				612D721924D42E01004BF254 /* Assets.xcassets */,
+				61DE9DD82549D53400E715FD /* chipsIcon.png */,
 				612B3ED725320A5F00112600 /* Sounds */,
 			);
 			path = ChipsProject;
@@ -381,7 +381,6 @@
 				612B3EE825320A5F00112600 /* smallButton.aiff in Resources */,
 				612B3EE525320A5F00112600 /* bigButton.aiff in Resources */,
 				612BB1D225373D16006E0053 /* countLabel.aiff in Resources */,
-				612CFD7625442E2E00CC379C /* chipsIcon.png in Resources */,
 				612D721D24D42E01004BF254 /* LaunchScreen.storyboard in Resources */,
 				612B3EEB25320A5F00112600 /* nextState.mp3 in Resources */,
 				612B3EEA25320A5F00112600 /* preFlop.mp3 in Resources */,
@@ -390,6 +389,7 @@
 				612D721A24D42E01004BF254 /* Assets.xcassets in Resources */,
 				612B3EE425320A5F00112600 /* betRaise.mp3 in Resources */,
 				612D721824D42DFD004BF254 /* Main.storyboard in Resources */,
+				61DE9DD92549D53400E715FD /* chipsIcon.png in Resources */,
 				612B3EE725320A5F00112600 /* call.mp3 in Resources */,
 				612B3EE925320A5F00112600 /* gameOver.mp3 in Resources */,
 				612B3EEC25320A5F00112600 /* fold.mp3 in Resources */,
@@ -718,6 +718,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 58PCABA652;
 				INFOPLIST_FILE = ChipsProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
@@ -738,6 +739,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 58PCABA652;
 				INFOPLIST_FILE = ChipsProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;

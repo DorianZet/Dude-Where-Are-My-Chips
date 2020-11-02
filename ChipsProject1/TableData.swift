@@ -17,28 +17,6 @@ enum GameState {
 }
 
 class TableData {
-    
-//    static private (set) var shared: TableData? = TableData()
-//    
-//    class func newShared() -> TableData { // change class to final to prevent override
-//            guard let uwShared = shared else {
-//                shared = TableData()
-//                return shared!
-//            }
-//            return uwShared
-//        }
-//    
-//    static func resetTableData() {
-//        shared = nil
-//    }
-//    
-//    private init() {
-//        print("TableData initialized")
-//    }
-//    
-//    deinit {
-//        print("TableData deinitialized")
-//    }
     var playerNames = ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"]
     var numberOfPlayers = Int()
     var activePlayers = [PlayerData]()
@@ -67,10 +45,6 @@ class TableData {
         activePlayers.forEach { $0.isPlayerSmallBlind = false }
         activePlayers.forEach { $0.isPlayerBigBlind = false }
         
-        // take away the small blind from the player:
-//        activePlayers[smallBlindPlayerIndex].playerChips -= smallBlind
-//        activePlayers[smallBlindPlayerIndex].playerBet = smallBlind
-//        potChips += smallBlind
         if isNewGame == true {
             smallBlindPlayerIndex = Int.random(in: 0...activePlayers.count - 1)
             isNewGame = false
@@ -82,21 +56,11 @@ class TableData {
             bigBlindPlayerIndex = 0
         }
         
-        // take away the big blind from the next player:
-//        activePlayers[bigBlindPlayerIndex].playerChips -= smallBlind * 2
-//        activePlayers[bigBlindPlayerIndex].playerBet = smallBlind * 2
-//        potChips += smallBlind * 2
         activePlayers[bigBlindPlayerIndex].isPlayerBigBlind = true
 
         
         print("Small blind for activePlayers index: \(smallBlindPlayerIndex)")
         print("Big blind for active Players index: \(bigBlindPlayerIndex)")
-       
-//        smallBlindPlayerIndex += 1
-        
-//        if smallBlindPlayerIndex > activePlayers.count - 1 {
-//            smallBlindPlayerIndex = 0
-//        }
     }
     
     func configureBlindsBeforeNewHand() {

@@ -16,6 +16,4 @@ class HandStateLabel: UILabel {
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)))
     }
-    
-
 }

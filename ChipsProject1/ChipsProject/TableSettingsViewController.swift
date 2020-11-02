@@ -102,6 +102,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
         tableData.numberOfPlayers = currentNumberOfPlayers
         numberOfPlayersLabel.text = "\(currentNumberOfPlayers) PLAYERS"
     }
+    
     @IBAction func tapPlusOnePlayersButton(_ sender: UIButton) {
         playSound(for: "smallButton.aiff")
 
@@ -116,8 +117,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
         tableData.numberOfPlayers = currentNumberOfPlayers
         numberOfPlayersLabel.text = "\(currentNumberOfPlayers) PLAYERS"
     }
-    
-    
+
     @IBAction func tapMinusChipsButton(_ sender: Any) {
         playSound(for: "smallButton.aiff")
         
@@ -129,6 +129,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
         tableData.startingChips = currentStartingChips
         startingChipsLabel.text = "\(currentStartingChips)"
     }
+    
     @IBAction func tapPlusChipsButton(_ sender: Any) {
         playSound(for: "smallButton.aiff")
         
@@ -152,6 +153,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
         tableData.smallBlind = currentSmallBlind
         blindsLabel.text = "\(currentSmallBlind)/\(currentSmallBlind * 2)"
     }
+    
     @IBAction func tapPlusBlindsButton(_ sender: Any) {
         playSound(for: "smallButton.aiff")
         
@@ -184,7 +186,6 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
             }
         }
 
-
         ac.addAction(cancelAction)
         ac.addAction(okAction)
         present(ac, animated: true)
@@ -195,6 +196,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
 
         performSegue(withIdentifier: "UnwindToChoosePlayersSegue", sender: sender)
     }
+    
     @IBAction func chooseOKButton(_ sender: UIButton) {
         playSound(for: "bigButton.aiff")
         
@@ -248,13 +250,11 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
             eachButton?.backgroundColor = .clear
         }
         
-        
         let labels = [numberOfPlayersLabel, blindsLabel, startingChipsLabel, blindsAboveTitle, startingChipsAboveTitle, numbeOfPlayersAboveTitle]
         
         let allButtons = [minusOnePlayersButton, plusOnePlayersButton, plusChipsButton, minusChipsButton, plusBlindsButton, minusBlindsButton, namePlayers, backButton, OKButton]
         
         if UIDevice.current.userInterfaceIdiom == .phone {
-            
             for eachLabel in labels {
                 eachLabel?.font = UIFont(name: "Pixel Emulator", size: 17)
             }
@@ -310,7 +310,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             } else {
-                print("path couldnt be found")
+                print("path couldn't be found")
             }
         }
     }

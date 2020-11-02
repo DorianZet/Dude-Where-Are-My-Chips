@@ -220,7 +220,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NUMBER OF PLAYERS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OhP-04-QNc">
-                                                <rect key="frame" x="98" y="34" width="218" height="20"/>
+                                                <rect key="frame" x="117.5" y="34" width="179.5" height="20"/>
                                                 <fontDescription key="fontDescription" name="PixelEmulator" family="Pixel Emulator" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -251,19 +251,19 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BLINDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swn-rv-AQU">
-                                                <rect key="frame" x="169" y="394.5" width="76.5" height="20"/>
+                                                <rect key="frame" x="176.5" y="394.5" width="61" height="20"/>
                                                 <fontDescription key="fontDescription" name="PixelEmulator" family="Pixel Emulator" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="STARTING CHIPS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPW-da-dJ8">
-                                                <rect key="frame" x="117.5" y="214.5" width="179.5" height="20"/>
+                                                <rect key="frame" x="138.5" y="214.5" width="137" height="20"/>
                                                 <fontDescription key="fontDescription" name="PixelEmulator" family="Pixel Emulator" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TABLE SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rG-9f-nUF">
-                                                <rect key="frame" x="94" y="0.0" width="226" height="26"/>
+                                                <rect key="frame" x="118.5" y="0.0" width="177.5" height="26"/>
                                                 <fontDescription key="fontDescription" name="PixelEmulator" family="Pixel Emulator" pointSize="22"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -592,7 +592,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YOUR BET" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTy-Hc-ETt">
-                                <rect key="frame" x="166.5" y="630.5" width="81" height="20.5"/>
+                                <rect key="frame" x="0.0" y="630.5" width="414" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -622,23 +622,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZY3-Wg-hAL">
-                                <rect key="frame" x="20" y="192" width="374" height="42"/>
+                                <rect key="frame" x="174" y="192" width="66" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJt-1j-c0S" customClass="RoundedButton" customModule="Dude__Where_Are_My_Chips_" customModuleProvider="target">
-                                <rect key="frame" x="133" y="98" width="44" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="pJt-1j-c0S" secondAttribute="height" multiplier="1:1" id="W9G-Cv-pk0"/>
-                                </constraints>
-                                <state key="normal">
-                                    <imageReference key="image" image="homeicon" symbolScale="large" renderingMode="original"/>
-                                </state>
-                                <connections>
-                                    <action selector="tapHomeIcon:" destination="8g6-ZL-prp" eventType="touchUpInside" id="2Nn-9U-VgO"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dB4-E9-SN1" customClass="RoundedButton" customModule="Dude__Where_Are_My_Chips_">
                                 <rect key="frame" x="185" y="98" width="44" height="44"/>
                                 <constraints>
@@ -654,6 +642,18 @@
                                     <action selector="tapSoundButton:" destination="8g6-ZL-prp" eventType="touchUpInside" id="PYG-Q8-IVD"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJt-1j-c0S" customClass="RoundedButton" customModule="Dude__Where_Are_My_Chips_" customModuleProvider="target">
+                                <rect key="frame" x="133" y="98" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="pJt-1j-c0S" secondAttribute="height" multiplier="1:1" id="W9G-Cv-pk0"/>
+                                </constraints>
+                                <state key="normal">
+                                    <imageReference key="image" image="homeicon" symbolScale="large" renderingMode="original"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapHomeIcon:" destination="8g6-ZL-prp" eventType="touchUpInside" id="2Nn-9U-VgO"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNI-bZ-kbO" customClass="RoundedButton" customModule="Dude__Where_Are_My_Chips_" customModuleProvider="target">
                                 <rect key="frame" x="237" y="98" width="44" height="44"/>
                                 <constraints>
@@ -667,12 +667,72 @@
                                     <action selector="tapInfoButton:" destination="8g6-ZL-prp" eventType="touchUpInside" id="led-UI-aPg"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HAND STATE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="eVV-UJ-Eha" customClass="HandStateLabel" customModule="Dude__Where_Are_My_Chips_" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gcU-uN-xww">
                                 <rect key="frame" x="20" y="64" width="374" height="778"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="70"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Unu-aV-j2L">
+                                        <rect key="frame" x="10" y="308.5" width="354" height="161"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HAND STATE" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="eVV-UJ-Eha" customClass="HandStateLabel" customModule="Dude__Where_Are_My_Chips_" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="354" height="76.5"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="64"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VGR-I3-dvI">
+                                                <rect key="frame" x="33" y="76.5" width="288" height="84.5"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chipCardUK.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wei-qZ-e9O">
+                                                        <rect key="frame" x="0.0" y="0.0" width="49.5" height="84.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="Wei-qZ-e9O" secondAttribute="height" multiplier="10:17" id="9Oz-NB-7lu"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chipCardUK.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Vq-5P-0ZW">
+                                                        <rect key="frame" x="59.5" y="0.0" width="49.5" height="84.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="8Vq-5P-0ZW" secondAttribute="height" multiplier="10:17" id="kby-Ju-3oN"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chipCardUK.png" translatesAutoresizingMaskIntoConstraints="NO" id="Vdm-Ks-uMH">
+                                                        <rect key="frame" x="119" y="0.0" width="50" height="84.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="Vdm-Ks-uMH" secondAttribute="height" multiplier="10:17" id="GNY-BQ-dWc"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chipCardUK.png" translatesAutoresizingMaskIntoConstraints="NO" id="e5l-oM-LQc">
+                                                        <rect key="frame" x="179" y="0.0" width="49.5" height="84.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="e5l-oM-LQc" secondAttribute="height" multiplier="10:17" id="Tsf-en-DOO"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chipCardUK.png" translatesAutoresizingMaskIntoConstraints="NO" id="dLz-Bl-bv6">
+                                                        <rect key="frame" x="238.5" y="0.0" width="49.5" height="84.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="dLz-Bl-bv6" secondAttribute="height" multiplier="10:17" id="M8n-m1-RuA"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="VGR-I3-dvI" firstAttribute="centerX" secondItem="Unu-aV-j2L" secondAttribute="centerX" id="kub-cy-Z8H"/>
+                                            <constraint firstItem="eVV-UJ-Eha" firstAttribute="centerX" secondItem="Unu-aV-j2L" secondAttribute="centerX" id="lVs-eo-i4S"/>
+                                            <constraint firstAttribute="bottom" secondItem="VGR-I3-dvI" secondAttribute="bottom" id="wFJ-IU-kIU"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Unu-aV-j2L" firstAttribute="leading" secondItem="gcU-uN-xww" secondAttribute="leading" constant="10" id="0vg-98-3A8"/>
+                                    <constraint firstAttribute="trailing" secondItem="Unu-aV-j2L" secondAttribute="trailing" constant="10" id="bOW-QH-eeu"/>
+                                    <constraint firstItem="Unu-aV-j2L" firstAttribute="centerY" secondItem="gcU-uN-xww" secondAttribute="centerY" id="uzk-j4-NLh"/>
+                                    <constraint firstItem="Unu-aV-j2L" firstAttribute="centerX" secondItem="gcU-uN-xww" secondAttribute="centerX" id="xva-id-9sZ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iNF-kb-MwS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -681,8 +741,7 @@
                             <constraint firstItem="erA-by-qp3" firstAttribute="leading" secondItem="t0Y-Zg-lKM" secondAttribute="trailing" constant="20" id="2XF-2m-ukx"/>
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="top" secondItem="Xoo-hM-Aak" secondAttribute="bottom" constant="16" id="3I6-1O-zZc"/>
                             <constraint firstItem="jjh-tY-77Y" firstAttribute="height" secondItem="y1I-eg-Dn7" secondAttribute="height" id="4A1-xx-SWt"/>
-                            <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" secondItem="eVV-UJ-Eha" secondAttribute="trailing" constant="20" id="5fP-2l-4JD"/>
-                            <constraint firstItem="y1I-eg-Dn7" firstAttribute="bottom" secondItem="eVV-UJ-Eha" secondAttribute="bottom" id="5os-pM-NpK"/>
+                            <constraint firstItem="e8J-dx-d87" firstAttribute="top" secondItem="iNF-kb-MwS" secondAttribute="top" constant="20" id="4TB-sd-asi"/>
                             <constraint firstItem="e8J-dx-d87" firstAttribute="leading" secondItem="iNF-kb-MwS" secondAttribute="leading" constant="20" id="5pG-h9-vsL"/>
                             <constraint firstItem="dB4-E9-SN1" firstAttribute="leading" secondItem="pJt-1j-c0S" secondAttribute="trailing" constant="8" symbolic="YES" id="5wa-9A-hxA"/>
                             <constraint firstItem="pJt-1j-c0S" firstAttribute="width" secondItem="dB4-E9-SN1" secondAttribute="width" id="61l-wn-4Cp"/>
@@ -690,39 +749,39 @@
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="top" secondItem="erA-by-qp3" secondAttribute="top" id="7ft-kR-3fl"/>
                             <constraint firstItem="b2T-hg-uEs" firstAttribute="leading" secondItem="jjh-tY-77Y" secondAttribute="trailing" constant="10" id="864-lZ-cjN"/>
                             <constraint firstItem="7Wm-th-uXJ" firstAttribute="leading" secondItem="iNF-kb-MwS" secondAttribute="leading" constant="87" id="8BD-Fm-ZgJ"/>
+                            <constraint firstItem="t0Y-Zg-lKM" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="8OL-A0-1gX"/>
                             <constraint firstItem="e8J-dx-d87" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="8zg-2O-fyf"/>
                             <constraint firstItem="ZY3-Wg-hAL" firstAttribute="top" secondItem="dB4-E9-SN1" secondAttribute="bottom" constant="50" id="9ud-Ae-RI3"/>
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="leading" secondItem="ARl-60-PXm" secondAttribute="trailing" constant="20" id="B9P-78-MVm"/>
                             <constraint firstItem="gcu-nh-6kM" firstAttribute="top" secondItem="7Wm-th-uXJ" secondAttribute="bottom" id="D10-YM-wMd"/>
+                            <constraint firstItem="gcU-uN-xww" firstAttribute="top" secondItem="iNF-kb-MwS" secondAttribute="top" constant="20" id="DdS-la-eFE"/>
                             <constraint firstItem="xDL-Nl-gp1" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="F3v-8V-Y6L"/>
                             <constraint firstItem="y1I-eg-Dn7" firstAttribute="top" secondItem="jjh-tY-77Y" secondAttribute="top" id="FmS-rt-1GV"/>
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="baseline" secondItem="ARl-60-PXm" secondAttribute="firstBaseline" id="G4c-Zw-KNi"/>
                             <constraint firstItem="b2T-hg-uEs" firstAttribute="width" secondItem="y1I-eg-Dn7" secondAttribute="width" id="GBl-MX-6UA"/>
                             <constraint firstItem="xDL-Nl-gp1" firstAttribute="top" secondItem="ZY3-Wg-hAL" secondAttribute="bottom" id="HBk-Ji-crN"/>
                             <constraint firstItem="y1I-eg-Dn7" firstAttribute="baseline" secondItem="jjh-tY-77Y" secondAttribute="firstBaseline" id="IXS-Ke-Vp5"/>
-                            <constraint firstItem="eVV-UJ-Eha" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="Ike-R1-5by"/>
-                            <constraint firstItem="iNF-kb-MwS" firstAttribute="bottom" secondItem="eVV-UJ-Eha" secondAttribute="bottom" constant="20" id="Im5-m2-e3j"/>
                             <constraint firstItem="pJt-1j-c0S" firstAttribute="bottom" secondItem="dB4-E9-SN1" secondAttribute="bottom" id="JIG-BZ-maZ"/>
                             <constraint firstItem="y1I-eg-Dn7" firstAttribute="top" secondItem="ARl-60-PXm" secondAttribute="bottom" constant="20" id="KG8-fY-fxv"/>
                             <constraint firstItem="b2T-hg-uEs" firstAttribute="height" secondItem="y1I-eg-Dn7" secondAttribute="height" id="Kcf-1F-HM3"/>
                             <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" secondItem="gcu-nh-6kM" secondAttribute="trailing" constant="20" id="Kx3-3C-G20"/>
-                            <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yTy-Hc-ETt" secondAttribute="trailing" symbolic="YES" id="MlN-1W-IG5"/>
+                            <constraint firstItem="gcU-uN-xww" firstAttribute="centerY" secondItem="iNF-kb-MwS" secondAttribute="centerY" id="MFD-7j-oPJ"/>
+                            <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" secondItem="yTy-Hc-ETt" secondAttribute="trailing" symbolic="YES" id="MlN-1W-IG5"/>
                             <constraint firstItem="ZY3-Wg-hAL" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="NoP-V2-jTA"/>
                             <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" secondItem="e8J-dx-d87" secondAttribute="trailing" constant="20" id="ONF-r8-8lE"/>
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="width" secondItem="ARl-60-PXm" secondAttribute="width" id="PCW-9M-fvJ"/>
                             <constraint firstItem="jjh-tY-77Y" firstAttribute="width" secondItem="y1I-eg-Dn7" secondAttribute="width" id="PUC-gF-OEp"/>
                             <constraint firstItem="yTy-Hc-ETt" firstAttribute="centerX" secondItem="yjd-pA-2ca" secondAttribute="centerX" id="QDy-AH-raj"/>
-                            <constraint firstItem="eVV-UJ-Eha" firstAttribute="centerY" secondItem="iNF-kb-MwS" secondAttribute="centerY" id="S8i-gv-pOQ"/>
                             <constraint firstItem="erA-by-qp3" firstAttribute="width" secondItem="ARl-60-PXm" secondAttribute="width" id="Tjf-qh-KFO"/>
                             <constraint firstItem="QNI-bZ-kbO" firstAttribute="leading" secondItem="dB4-E9-SN1" secondAttribute="trailing" constant="8" symbolic="YES" id="TvL-Ap-hbA"/>
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="width" secondItem="jjh-tY-77Y" secondAttribute="width" multiplier="0.66" id="U6F-W5-UJk"/>
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="top" secondItem="ARl-60-PXm" secondAttribute="top" id="UpY-eP-aJ8"/>
-                            <constraint firstItem="eVV-UJ-Eha" firstAttribute="leading" secondItem="iNF-kb-MwS" secondAttribute="leading" constant="20" id="VN4-sJ-hAf"/>
+                            <constraint firstItem="7Wm-th-uXJ" firstAttribute="height" secondItem="xDL-Nl-gp1" secondAttribute="height" id="V3q-ni-aNt"/>
                             <constraint firstItem="Xoo-hM-Aak" firstAttribute="leading" secondItem="iNF-kb-MwS" secondAttribute="leading" constant="20" id="W5h-4V-n2r"/>
-                            <constraint firstItem="eVV-UJ-Eha" firstAttribute="top" secondItem="iNF-kb-MwS" secondAttribute="top" constant="20" id="W86-1a-CWw"/>
+                            <constraint firstItem="Vdm-Ks-uMH" firstAttribute="width" secondItem="H3m-G3-ci1" secondAttribute="width" multiplier="0.12" id="W6R-8s-g2I"/>
                             <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" secondItem="7Wm-th-uXJ" secondAttribute="trailing" constant="87" id="Wap-Tv-7I4"/>
-                            <constraint firstItem="e8J-dx-d87" firstAttribute="top" secondItem="eVV-UJ-Eha" secondAttribute="top" id="Wcy-pk-bC0"/>
                             <constraint firstItem="y1I-eg-Dn7" firstAttribute="baseline" secondItem="b2T-hg-uEs" secondAttribute="firstBaseline" id="XZ4-t5-6xt"/>
+                            <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" secondItem="gcU-uN-xww" secondAttribute="trailing" constant="20" id="a6o-y6-beZ"/>
                             <constraint firstItem="y1I-eg-Dn7" firstAttribute="top" secondItem="b2T-hg-uEs" secondAttribute="top" id="bB4-Kf-ySI"/>
                             <constraint firstItem="Nvo-DI-AaL" firstAttribute="top" secondItem="xDL-Nl-gp1" secondAttribute="bottom" id="bNA-Hi-PEg"/>
                             <constraint firstItem="jjh-tY-77Y" firstAttribute="leading" secondItem="y1I-eg-Dn7" secondAttribute="trailing" constant="10" id="bVv-Sj-6d8"/>
@@ -738,22 +797,25 @@
                             <constraint firstItem="QNI-bZ-kbO" firstAttribute="bottom" secondItem="dB4-E9-SN1" secondAttribute="bottom" id="gI6-Iz-gcY"/>
                             <constraint firstItem="pJt-1j-c0S" firstAttribute="top" secondItem="dB4-E9-SN1" secondAttribute="top" id="gWx-hu-hNU"/>
                             <constraint firstItem="y1I-eg-Dn7" firstAttribute="leading" secondItem="iNF-kb-MwS" secondAttribute="leading" constant="20" id="gcU-wj-UfJ"/>
+                            <constraint firstItem="dLz-Bl-bv6" firstAttribute="width" secondItem="H3m-G3-ci1" secondAttribute="width" multiplier="0.12" id="ghS-fS-ovo"/>
                             <constraint firstItem="iNF-kb-MwS" firstAttribute="trailing" secondItem="Xoo-hM-Aak" secondAttribute="trailing" constant="20" id="hKQ-45-Nuw"/>
-                            <constraint firstItem="ZY3-Wg-hAL" firstAttribute="trailing" secondItem="eVV-UJ-Eha" secondAttribute="trailing" id="hKo-8i-On6"/>
                             <constraint firstItem="dB4-E9-SN1" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="hvj-jk-y5S"/>
-                            <constraint firstItem="Nvo-DI-AaL" firstAttribute="centerX" secondItem="eVV-UJ-Eha" secondAttribute="centerX" id="ikV-oq-Vjn"/>
+                            <constraint firstItem="gcU-uN-xww" firstAttribute="leading" secondItem="iNF-kb-MwS" secondAttribute="leading" constant="20" id="jVs-yz-tuM"/>
+                            <constraint firstItem="Wei-qZ-e9O" firstAttribute="width" secondItem="H3m-G3-ci1" secondAttribute="width" multiplier="0.12" id="l69-QH-HpB"/>
                             <constraint firstItem="dB4-E9-SN1" firstAttribute="top" secondItem="e8J-dx-d87" secondAttribute="bottom" constant="8" symbolic="YES" id="lSF-7K-GaV"/>
                             <constraint firstItem="Xoo-hM-Aak" firstAttribute="top" secondItem="yTy-Hc-ETt" secondAttribute="bottom" constant="8" id="m6Z-Cz-GRg"/>
                             <constraint firstItem="Xoo-hM-Aak" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="mjL-h4-H7a"/>
-                            <constraint firstItem="t0Y-Zg-lKM" firstAttribute="centerX" secondItem="eVV-UJ-Eha" secondAttribute="centerX" id="nIh-5h-t62"/>
+                            <constraint firstItem="iNF-kb-MwS" firstAttribute="bottom" secondItem="gcU-uN-xww" secondAttribute="bottom" constant="20" id="niZ-fy-L5u"/>
                             <constraint firstItem="t0Y-Zg-lKM" firstAttribute="baseline" secondItem="erA-by-qp3" secondAttribute="firstBaseline" id="oxT-Uv-PCk"/>
+                            <constraint firstItem="e5l-oM-LQc" firstAttribute="width" secondItem="H3m-G3-ci1" secondAttribute="width" multiplier="0.12" id="pF6-dX-OXM"/>
+                            <constraint firstItem="8Vq-5P-0ZW" firstAttribute="width" secondItem="H3m-G3-ci1" secondAttribute="width" multiplier="0.12" id="qSf-qz-NvA"/>
+                            <constraint firstItem="Nvo-DI-AaL" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="qfM-4I-S4h"/>
                             <constraint firstItem="iNF-kb-MwS" firstAttribute="bottom" secondItem="y1I-eg-Dn7" secondAttribute="bottom" constant="20" id="s1e-tk-1Kz"/>
                             <constraint firstItem="gcu-nh-6kM" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="sEg-iy-Qxl"/>
-                            <constraint firstItem="7Wm-th-uXJ" firstAttribute="height" secondItem="xDL-Nl-gp1" secondAttribute="height" id="t1G-ao-zSy"/>
-                            <constraint firstItem="ZY3-Wg-hAL" firstAttribute="leading" secondItem="eVV-UJ-Eha" secondAttribute="leading" id="xgu-Wp-v6F"/>
                             <constraint firstItem="7Wm-th-uXJ" firstAttribute="width" secondItem="xDL-Nl-gp1" secondAttribute="width" id="y67-Sj-UsI"/>
                             <constraint firstItem="yjd-pA-2ca" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="yDc-5v-byc"/>
                             <constraint firstItem="yjd-pA-2ca" firstAttribute="top" secondItem="gcu-nh-6kM" secondAttribute="bottom" constant="4" id="yMK-kq-8Bj"/>
+                            <constraint firstItem="gcU-uN-xww" firstAttribute="centerX" secondItem="iNF-kb-MwS" secondAttribute="centerX" id="zfX-MI-OIU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="c0K-6h-Ajp"/>
@@ -761,9 +823,16 @@
                         <outlet property="OKButton" destination="t0Y-Zg-lKM" id="IiQ-s1-PrW"/>
                         <outlet property="betSlider" destination="Xoo-hM-Aak" id="M5v-aL-uOP"/>
                         <outlet property="callCheckButton" destination="jjh-tY-77Y" id="9i2-AH-YGy"/>
+                        <outlet property="card1" destination="Wei-qZ-e9O" id="QBp-Ax-Mo7"/>
+                        <outlet property="card2" destination="8Vq-5P-0ZW" id="eTI-Dg-I4r"/>
+                        <outlet property="card3" destination="Vdm-Ks-uMH" id="566-DN-tTS"/>
+                        <outlet property="card4" destination="e5l-oM-LQc" id="rMZ-2i-5Wf"/>
+                        <outlet property="card5" destination="dLz-Bl-bv6" id="fj2-m3-2fG"/>
+                        <outlet property="cardsStackView" destination="VGR-I3-dvI" id="4j3-tc-lMv"/>
                         <outlet property="currentBetLabel" destination="Nvo-DI-AaL" id="VDd-Sb-btf"/>
                         <outlet property="foldButton" destination="y1I-eg-Dn7" id="JUW-U3-dnt"/>
                         <outlet property="handStateLabel" destination="eVV-UJ-Eha" id="z6N-nE-hY4"/>
+                        <outlet property="handStateView" destination="gcU-uN-xww" id="n2r-Yu-0LI"/>
                         <outlet property="homeButton" destination="pJt-1j-c0S" id="Rmg-Yu-oXc"/>
                         <outlet property="infoButton" destination="QNI-bZ-kbO" id="Del-oL-3tc"/>
                         <outlet property="minimumBetLabel" destination="yjd-pA-2ca" id="PhM-6n-C4m"/>
@@ -1049,13 +1118,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHOOSE THE 1ST DRAW WINNER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bBX-Ww-n7P">
-                                <rect key="frame" x="20" y="44" width="374" height="32"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHOOSE THE 1ST DRAW WINNER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="bBX-Ww-n7P">
+                                <rect key="frame" x="20" y="44" width="374" height="26.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="DNX-me-VYW"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1278,6 +1344,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chipCardUK.png" width="1000" height="1700"/>
         <image name="dudeLogo1" width="644" height="364"/>
         <image name="guacamole" width="344" height="312"/>
         <image name="homeicon" width="64" height="56"/>

@@ -64,10 +64,7 @@ class DrawViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910") // test ad ID
-        interstitial.delegate = self
-        let request = GADRequest()
-        interstitial.load(request)
+        loadAd()
         
         setExclusiveTouchForAllButtons()
         
@@ -90,6 +87,9 @@ class DrawViewController: UIViewController {
         doneButton.isHidden = true
         doneButton.alpha = 0
         summaryView.alpha = 0
+        
+        addNextPlayerButton.contentHorizontalAlignment = .center
+        addNextPlayerButton.titleLabel?.textAlignment = .center
     
         potChips = tableData.potChips
         
@@ -150,8 +150,6 @@ class DrawViewController: UIViewController {
             }
             print("Ad wasn't ready or the number of hands played wasn't 1")
         }
-        
-        
     }
     
     @IBAction func tapCancelButton(_ sender: Any) {
@@ -167,8 +165,6 @@ class DrawViewController: UIViewController {
             self.titleLabel.alpha = 0
             self.choosePlayerView.alpha = 0
             self.cancelButton.alpha = 0
-//            self.playersChipsLabel.alpha = 0
-//            self.potChipsLabel.alpha = 0
         }, completion: { _ in
             self.titleLabel.isHidden = true
             self.choosePlayerView.isHidden = true
@@ -192,6 +188,9 @@ class DrawViewController: UIViewController {
             potChips -= remainder
         } else {
             var nextAvailablePlayerIndex = tableData.smallBlindPlayerIndex + 1
+            if nextAvailablePlayerIndex > tableData.activePlayers.count - 1 {
+                nextAvailablePlayerIndex = 0
+            }
             var nextAvailablePlayer = tableData.activePlayers[nextAvailablePlayerIndex]
             while !drawWinners.contains(nextAvailablePlayer) {
                 nextAvailablePlayerIndex += 1
@@ -206,25 +205,6 @@ class DrawViewController: UIViewController {
             print("There are \(potChips) pot chips.")
         }
         
-        // To jest zjebane, bo animacje zdychają w for loopach. Musisz wykombinować coś innego.
-//        for eachPlayer in drawWinners {
-//            UIView.animate(withDuration: 0.4, animations: {
-//                self.playersChipsLabel.alpha = 1
-//                self.potChipsLabel.alpha = 1
-//            }, completion: { _ in
-//                self.potChipsLabel.count(fromValue: Float(self.tableData.potChips), to: Float(self.tableData.potChips - eachPlayer.playerChipsToWinInDraw), withDuration: 3, andAnimationType: .Linear, andCounterType: .Int)
-//                self.playersChipsLabel.count(fromValue: Float(eachPlayer.playerChips), to: Float(eachPlayer.playerChips + eachPlayer.playerChipsToWinInDraw), withDuration: 3, andAnimationType: .Linear, andCounterType: .Int)
-//                eachPlayer.playerChips += eachPlayer.playerChipsToWinInDraw
-//                print("\(eachPlayer.playerName) chips to win in draw: \(eachPlayer.playerChipsToWinInDraw)")
-//
-//                UIView.animate(withDuration: 0.4, animations: {
-//                    self.playersChipsLabel.alpha = 0
-//                    self.potChipsLabel.alpha = 0
-//                })
-//            })
-//        }
-        
-        
         for eachPlayer in drawWinners {
             eachPlayer.playerChips += eachPlayer.playerChipsToWinInDraw
             print("\(eachPlayer.playerName) chips to win in draw: \(eachPlayer.playerChipsToWinInDraw)")
@@ -237,12 +217,8 @@ class DrawViewController: UIViewController {
                 }
             }
         }
-//     !!!!!!!!!!!!!!!!!   sprawdz tu czy w normalnym przypadku potChips na pewno jest rowny 0.
+
         print("Now there are \(potChips) pot chips.")
-        // decide what to do if the winners are only side-pot players and some chips are left on the table:
-        if potChips > 0 {
-            decideWhatToDoIfTheWinnersAreOnlySidePotPlayersAndSomeChipsAreLeftOnTable()
-        }
         
         // after distributing the chips, we can get rid of the players that have 0 chips:
         removeLosersAndAddThemToLosersArray()
@@ -267,7 +243,6 @@ class DrawViewController: UIViewController {
             summaryLabel.text! = String(finalSummaryTextWithLosers)
         }
         
-        
         UIView.animate(withDuration: 0.4, animations:  {
             self.playersChipsLabel.alpha = 0
             self.potChipsLabel.alpha = 0
@@ -282,80 +257,6 @@ class DrawViewController: UIViewController {
         })
 
     }
-    
-    func decideWhatToDoIfTheWinnersAreOnlySidePotPlayersAndSomeChipsAreLeftOnTable() {
-//        ta funkcja gdzies jest zepsuta, przyjrzyj sie dlaczego gubi chipsy (ostatnio zgubila 216/2000)
-        var playersAccountableForDrawCount = playersAccountableForDraw.count
-        
-        if playersAccountableForDrawCount == 0 { // we prevent 'divide by zero' error if there are no playersAccountableForDraw left.
-            playersAccountableForDrawCount = 1
-        }
-        
-        for eachPlayer in playersAccountableForDraw {
-            if eachPlayer.playerWentAllInForSidePot == true {
-//                tutaj musi byc playerBet * 1, nie * playersaccForDraw:
-                eachPlayer.playerChipsToWinInDraw = eachPlayer.playerBet
-                potChips -= eachPlayer.playerChipsToWinInDraw
-            } else {
-                playersAccountableForDrawWhoAreNotAllInCount += 1
-            }
-        }
-        
-        let remainder = potChips % playersAccountableForDrawWhoAreNotAllInCount
-        let potChipsWithNoRemainder = potChips - remainder
-        
-        for eachPlayer in playersAccountableForDraw {
-            if eachPlayer.playerBet >= tableData.minimumBet {
-                eachPlayer.playerChipsToWinInDraw = potChipsWithNoRemainder / playersAccountableForDrawWhoAreNotAllInCount
-                potChips -= eachPlayer.playerChipsToWinInDraw
-            }
-        }
-
-//       for eachPlayer in playersAccountableForDraw {
-//            if eachPlayer.playerBet >= tableData.minimumBet {
-//                eachPlayer.playerChipsToWinInDraw = potChipsWithNoRemainder / normalWinnersCount
-//                potChips -= eachPlayer.playerChipsToWinInDraw
-//            } else {
-//                eachPlayer.playerChipsToWinInDraw = eachPlayer.playerBet * playersAccountableForDrawCountAtBeginning
-//                potChips -= eachPlayer.playerChipsToWinInDraw
-//            }
-//        }
-
-        // now decide to whom goes the remainder (it goes to the first available player after the dealer):
-        let smallBlindPlayer = tableData.activePlayers[tableData.smallBlindPlayerIndex]
-        
-        if playersAccountableForDraw.contains(smallBlindPlayer) {
-            smallBlindPlayer.playerChipsToWinInDraw += remainder
-        } else {
-            var nextAvailablePlayerIndex = tableData.smallBlindPlayerIndex + 1
-            var nextAvailablePlayer = tableData.activePlayers[nextAvailablePlayerIndex]
-            while !playersAccountableForDraw.contains(nextAvailablePlayer) {
-                nextAvailablePlayerIndex += 1
-                if nextAvailablePlayerIndex > tableData.activePlayers.count - 1 {
-                    nextAvailablePlayerIndex = 0
-                }
-                nextAvailablePlayer = tableData.activePlayers[nextAvailablePlayerIndex]
-            }
-            nextAvailablePlayer.playerChipsToWinInDraw += remainder
-            potChips -= remainder
-        }
-        
-        for eachPlayer in playersAccountableForDraw {
-            eachPlayer.playerChips += eachPlayer.playerChipsToWinInDraw
-            print("\(eachPlayer.playerName) chips to get back in draw: \(eachPlayer.playerChipsToWinInDraw)")
-        }
-        
-        for eachDrawPlayer in playersAccountableForDraw {
-            for eachPlayer in tableData.activePlayers {
-                if eachPlayer.playerName == eachDrawPlayer.playerName {
-                    eachPlayer.playerChips = eachDrawPlayer.playerChips
-                }
-            }
-        }
-        print("Number of pot chips after distributing them between the rest of the players: \(potChips).")
-
-    }
-    
     
     func changeTheTitleText() {
         if numberOfDrawWinners == 1 {
@@ -514,9 +415,6 @@ class DrawViewController: UIViewController {
     }
     
     func changeSmallBlindPlayer() {
-    //        tableData.activePlayers.forEach { $0.isPlayerSmallBlind = false }
-    //        tableData.activePlayers.forEach { $0.isPlayerBigBlind = false }
-
         nextSmallBlindPlayerIndex()
             
         if tableData.activePlayers[tableData.smallBlindPlayerIndex].isPlayerSmallBlind == true {
@@ -531,6 +429,13 @@ class DrawViewController: UIViewController {
         if tableData.smallBlindPlayerIndex > tableData.activePlayers.count - 1 {
             tableData.smallBlindPlayerIndex = 0
         }
+    }
+    
+    func loadAd() {
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910") // test ad ID
+        interstitial.delegate = self
+        let request = GADRequest()
+        interstitial.load(request)
     }
     
     func playSound(for fileString: String) {

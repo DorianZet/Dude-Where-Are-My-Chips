@@ -20,9 +20,9 @@ class ViewController: UIViewController {
     
     var soundOn = true
         
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setExclusiveTouchForAllButtons()
         configureButtonsForDevice()
         
@@ -107,7 +107,6 @@ class ViewController: UIViewController {
             cell.scale *= 0.33
             cell.contents = UIImage(named: "chipUS")?.cgImage
         }
-
         
         chipsEmitter.emitterCells = [cell]
         

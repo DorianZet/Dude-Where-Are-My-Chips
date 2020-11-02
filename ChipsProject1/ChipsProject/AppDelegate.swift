@@ -18,7 +18,7 @@ var window: UIWindow?
         // Override point for customization after application launch.
         
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-    
+
         return true
     }
 

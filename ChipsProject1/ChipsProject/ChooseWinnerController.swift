@@ -55,10 +55,7 @@ class ChooseWinnerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910") // test ad ID
-        interstitial.delegate = self
-        let request = GADRequest()
-        interstitial.load(request)
+        loadAd()
         
         checkNumberOfGamesPlayed()
         
@@ -147,7 +144,7 @@ class ChooseWinnerController: UIViewController {
         
         if sender.titleLabel?.text == "NEW HAND" {
             if interstitial.isReady && tableData.numberOfHandsPlayed == 1 {
-                interstitial.present(fromRootViewController: self)
+                interstitial.present(fromRootViewController: self) // present ad if ready
             } else {
                 performSegue(withIdentifier: "UnwindToPokerTableSegue", sender: sender)
                 print("Ad wasn't ready or the number of hands played wasn't 1")
@@ -460,25 +457,6 @@ class ChooseWinnerController: UIViewController {
             self.previousPlayerButton.isHidden = true
         })
     }
-        
-//        UIView.animate(withDuration: 0.4) {
-//            self.playerNameLabel.alpha = 0
-//            self.playerNameLabel.isHidden = true
-//            self.OKButton.alpha = 0
-//            self.OKButton.isHidden = true
-//            self.nextPlayerButton.alpha = 0
-//            self.nextPlayerButton.isHidden = true
-//            self.previousPlayerButton.alpha = 0
-//            self.previousPlayerButton.isHidden = true
-//
-////            self.newHandButton.alpha = 1
-////            self.newHandButton.isHidden = false
-////            self.summaryLabel.alpha = 1
-////            self.summaryLabel.isHidden = false
-//
-//            self.summaryView.alpha = 1
-//            self.summaryView.isHidden = false
-//        }
     
     func makeAllPlayersWhoWentAllInAndAreUnderMinBetWentAllInForSidePot() {
         for eachPlayer in tableData.activePlayers {
@@ -487,7 +465,13 @@ class ChooseWinnerController: UIViewController {
             }
         }
     }
-
+    
+    func loadAd() {
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910") // test ad ID
+        interstitial.delegate = self
+        let request = GADRequest()
+        interstitial.load(request)
+    }
     
     func changeFontToPixel() {
         let biggerLabels = [potChipsLabel, playerChipsLabel, playerNameLabel]
@@ -514,10 +498,6 @@ class ChooseWinnerController: UIViewController {
             titleLabel.font = UIFont(name: "Pixel Emulator", size: 33)
             summaryLabel.font = UIFont(name: "Pixel Emulator", size: 27)
         }
-        
-        
-        
-        
         
         potChipsLabel.textColor = .systemYellow
         playerChipsLabel.textColor = .systemYellow
@@ -591,8 +571,6 @@ class ChooseWinnerController: UIViewController {
         }
     }
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UnwindToPokerTableSegue" {
             changeSmallBlindPlayer()
@@ -606,9 +584,6 @@ class ChooseWinnerController: UIViewController {
             destVC.hideAllLabelsAndButtons()
             destVC.hideSliderAndButtons()
             print("fired newHand() from prepareForSegue")
-        } else if segue.identifier == "UnwindToTitleSegue" {
-//            TableData.resetTableData()
-//            print("TableData reset.")
         } else if segue.identifier == "ShowDrawViewControllerSegue" {
             let destVC = segue.destination as! DrawViewController
             destVC.tableData = tableData
