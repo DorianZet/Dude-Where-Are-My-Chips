@@ -28,23 +28,20 @@
 
 ![dude](https://user-images.githubusercontent.com/62523613/97786395-977f6c00-1bab-11eb-92eb-24e1d1e2943d.jpg)
 
-<p align="center"> 
+
 Want to play a poker game, but those pesky chips are out of reach again? Behold, for here's the ultimate texas hold'em chips manager... with a potatoey twist!
 
-<p align="center"> "Dude, Where Are My Chips?" allows you to forget about all the hassle with having physical chips in your poker game. One device is all you need! </p>
+ "Dude, Where Are My Chips?" allows you to forget about all the hassle with having physical chips in your poker game. One device is all you need!
 
-<p align="center"> ... bring your own card deck though, OK? </p>
+ ... bring your own card deck though, OK? 
+<p align="center">
+ Features:<br>
+ • Control the in-game chips flow of up to 9 players<br>
+ • Traditional, No-Limit Texas Hold'em rules<br>
+ • Simple and intuitive interface<br>
+ • HOLY GUACAMOLE!
+  </p>
 
-<p align="center"> Features: <p>
-
-<p align="center"> • Control the in-game chips flow of up to 9 players </p>
-
-<p align="center"> • Traditional, No-Limit Texas Hold'em rules </p>
-
-<p align="center"> • Simple and intuitive interface </p>
-
-<p align="center"> • HOLY GUACAMOLE! </p>
-</p>
 
 ### Built With
 * [Swift 5.3](https://developer.apple.com/swift/)
@@ -57,7 +54,7 @@ Want to play a poker game, but those pesky chips are out of reach again? Behold,
 
 ## Installation
 
-No big deal here, just open the project in Xcode. REMEMBER though to open it through the '.xcworkspace' file.
+No big deal here really, just open the project in Xcode 12. REMEMBER though to open it through the '.xcworkspace' file.
 
 <!-- LICENSE -->
 ## License
