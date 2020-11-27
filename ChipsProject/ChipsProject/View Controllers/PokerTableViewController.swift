@@ -180,7 +180,7 @@ class PokerTableViewController: UIViewController {
     @IBAction func tapInfoButton(_ sender: Any) {
         playSound(for: "smallButton.aiff")
         
-        var tableInfoMessage = currentGameState()
+        var tableInfoMessage = tableData.currentGameState()
         
         for eachPlayer in tableData.activePlayers {
             if eachPlayer.isPlayerSmallBlind == true && tableData.gameState == .preFlop {
@@ -237,19 +237,6 @@ class PokerTableViewController: UIViewController {
         self.present(pm, animated: true)
     }
     
-    func currentGameState() -> String {
-        if tableData.gameState == .preFlop {
-            return "PRE-FLOP (NO CARDS ON THE TABLE)\n\n"
-        } else if tableData.gameState == .theFlop {
-            return "THE FLOP (3 CARDS ON THE TABLE)\n\n"
-        } else if tableData.gameState == .theTurn {
-            return "THE TURN (4 CARDS ON THE TABLE)\n\n"
-        } else if tableData.gameState == .TheRiver {
-            return "THE RIVER (5 CARDS ON THE TABLE)\n\n"
-        } else {
-            return "?\n\n"
-        }
-    }
     
     @IBAction func tapFoldButton(_ sender: UIButton) {
         playSound(for: "fold.mp3")
@@ -320,27 +307,11 @@ class PokerTableViewController: UIViewController {
     @IBAction func tapMinusButton(_ sender: UIButton) {
         playSound(for: "smallButton.aiff")
         
-        if sliderChips >= tableData.currentPlayer.playerChips || currentBetIsBelowOrEqualToMinimumBetOrRaiseBet() {
+        if sliderChips >= tableData.currentPlayer.playerChips || tableData.currentBetIsBelowOrEqualToMinimumBetOrRaiseBet(currentBet: currentBet) {
             return
         } else {
             sliderChips += 1
             currentBet -= 1
-        }
-    }
-    
-    func currentBetIsBelowOrEqualToMinimumBetOrRaiseBet() -> Bool {
-        if tableData.currentPlayer.playerTappedRaise == true {
-            if currentBet <= tableData.minimumBet * 2 {
-                return true
-            } else {
-                return false
-            }
-        } else {
-            if currentBet <= tableData.minimumBet {
-                return true
-            } else {
-                return false
-            }
         }
     }
     
@@ -455,8 +426,8 @@ class PokerTableViewController: UIViewController {
     }
     
     func newHand() {
-        resetPlayerPropertiesForNewHand()
-        resetTablePropertiesForNewHand()
+        tableData.resetPlayerPropertiesForNewHand()
+        tableData.resetTablePropertiesForNewHand()
         tableData.chooseBlindPlayers()
         tableData.isNewHand = true
         tableData.numberOfHandsPlayed += 1
@@ -558,7 +529,7 @@ class PokerTableViewController: UIViewController {
         let playingPlayers = tableData.activePlayers.filter { $0.playerActiveInHand }
         
         let allBetsAreEqual = playingPlayers.allSatisfy ({ $0.playerBetInThisState == tableData.minimumBet })
-            || allBetsAreZero()
+            || tableData.allBetsAreZero()
         let allPlayersMoved = tableData.activePlayers.allSatisfy({ $0.playerMadeAMove == true })
         
         if allPlayersMoved {
@@ -567,7 +538,7 @@ class PokerTableViewController: UIViewController {
                 print("All players but 1 went all in, showing finish hand screen")
                 tableData.gameState = .finishHand
             } else if allBetsAreEqual {
-                goToNextState()
+                tableData.goToNextState()
                 playingPlayers.forEach { $0.playerMadeAMove = false }
             } else {
                 print ("bets not equal.")
@@ -586,7 +557,7 @@ class PokerTableViewController: UIViewController {
         
         print("POT: \(tableData.potChips)")
         print("allPlayersMoved = \(allPlayersMoved)")
-        print("allBetsAreZero = \(allBetsAreZero())")
+        print("allBetsAreZero = \(tableData.allBetsAreZero())")
         print("allBetsAreEqual = \(allBetsAreEqual)")
         for eachPlayer in tableData.activePlayers {
             if eachPlayer.playerMadeAMove == true {
@@ -598,29 +569,13 @@ class PokerTableViewController: UIViewController {
         print("-----------")
     }
     
-    func allBetsAreZero() -> Bool {
-        let playingPlayers = tableData.activePlayers
-        
-        var sumOfBets = 0
-        
-        for eachPlayer in playingPlayers {
-            sumOfBets += eachPlayer.playerBetInThisState
-        }
-        
-        if sumOfBets == 0 {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     func configureTurn() {
         // hide the slider and its buttons only if the slider is visible:
         hideSliderAndButtons()
         
         if tableData.newHandNeeded == true {
             print("new hand was needed")
-            decideWhoStartsWhenNewHand()
+            tableData.decideWhoStartsWhenNewHand()
             
             tableData.configureBlindsBeforeNewHand()
             
@@ -745,43 +700,6 @@ class PokerTableViewController: UIViewController {
         }
     }
     
-    func decideWhoStartsWhenNewHand() {
-        let playingPlayers = tableData.activePlayers.filter { $0.playerActiveInHand }
-        let noOneHasMovedYet = playingPlayers.allSatisfy { ($0.playerMadeAMove == false) }
-        
-        if tableData.gameState == .preFlop && playingPlayers.count == 2 && noOneHasMovedYet {
-            tableData.currentPlayer = tableData.activePlayers[tableData.smallBlindPlayerIndex]
-            tableData.currentPlayerIndex = tableData.smallBlindPlayerIndex
-        } else {
-            var afterBigBlindPlayerIndex = tableData.bigBlindPlayerIndex + 1
-            if afterBigBlindPlayerIndex > tableData.activePlayers.count - 1 {
-                afterBigBlindPlayerIndex = 0
-            }
-            tableData.currentPlayer = tableData.activePlayers[afterBigBlindPlayerIndex]
-            tableData.currentPlayerIndex = afterBigBlindPlayerIndex
-        }
-    }
-    
-    func goToNextState() {
-        if tableData.gameState == GameState.preFlop {
-            tableData.gameState = GameState.theFlop
-            tableData.nextStateNeeded = true
-            print("All bets are the same, next state needed")
-        } else if tableData.gameState == GameState.theFlop {
-            tableData.gameState = GameState.theTurn
-            tableData.nextStateNeeded = true
-            print("All bets are the same, next state needed")
-        } else if tableData.gameState == GameState.theTurn {
-            tableData.gameState = GameState.TheRiver
-            tableData.nextStateNeeded = true
-            print("All bets are the same, next state needed")
-        } else if tableData.gameState == GameState.TheRiver {
-            tableData.gameState = GameState.finishHand
-            tableData.nextStateNeeded = true
-            print("All bets are the same, next state needed")
-        }
-    }
-    
     func animateHandStateView(for state: String) {
         view.isUserInteractionEnabled = false
         
@@ -799,7 +717,7 @@ class PokerTableViewController: UIViewController {
             self.handStateView.alpha = 1
         }) { _ in
             if self.tableData.gameState == .preFlop {
-                self.showAllLabelsAndButtons()
+                self.showLabelsAndButtons()
                 self.playSound(for: "preFlop.mp3")
             } else {
                 self.playSound(for: "nextState.mp3")
@@ -942,32 +860,6 @@ class PokerTableViewController: UIViewController {
         }
     }
     
-    func resetPlayerPropertiesForNewHand() {
-        tableData.activePlayers.forEach {$0.playerBet = 0}
-        tableData.activePlayers.forEach { $0.playerBetInThisState = 0 }
-        tableData.activePlayers.forEach { $0.playerChipsToWinInDraw = 0 }
-
-
-        tableData.activePlayers.forEach { $0.playerActiveInHand = true }
-        tableData.activePlayers.forEach { $0.playerMadeAMove = false }
-        tableData.activePlayers.forEach { $0.playerChecked = false }
-        tableData.activePlayers.forEach { $0.playerWentAllIn = false }
-        tableData.activePlayers.forEach { $0.playerWentAllInForSidePot = false }
-        tableData.activePlayers.forEach { $0.playerFolded = false }
-        tableData.activePlayers.forEach { $0.playerTappedRaise = false }
-    }
-    
-    func resetTablePropertiesForNewHand() {
-        tableData.potChips = 0
-        tableData.currentBet = 0
-        tableData.allPlayersFolded = false
-        tableData.nextStateNeeded = false
-        tableData.winnerPlayer = PlayerData(playerName: String(), playerChips: Int(), playerBet: Int(), playerBetInThisState: Int())
-        tableData.gameState = .preFlop
-        tableData.minimumBet = tableData.smallBlind * 2
-        tableData.onePlayerLeftWithRestWentAllIn = false
-    }
-    
     func changeFontToPixel() {
         let allBigLabels = [potLabel, currentBetLabel, playerChipsLabel, playerLabel]
         let allSmallLabels = [minimumBetLabel, playerBetLabel]
@@ -1022,7 +914,7 @@ class PokerTableViewController: UIViewController {
         }
     }
     
-    func showAllLabelsAndButtons() {
+    func showLabelsAndButtons() {
         let allLabels = [playerLabel, potLabel, currentBetLabel, playerChipsLabel, minimumBetLabel, playerBetLabel]
         let allButtons = [foldButton, raiseBetButton, callCheckButton, homeButton, soundButton, infoButton]
 
@@ -1060,13 +952,11 @@ class PokerTableViewController: UIViewController {
     }
     
     func setImageForAllThumbStates(thumbImage: UIImage) {
-        betSlider.setThumbImage(thumbImage, for: .application)
-        betSlider.setThumbImage(thumbImage, for: .disabled)
-        betSlider.setThumbImage(thumbImage, for: .focused)
-        betSlider.setThumbImage(thumbImage, for: .highlighted)
-        betSlider.setThumbImage(thumbImage, for: .normal)
-        betSlider.setThumbImage(thumbImage, for: .reserved)
-        betSlider.setThumbImage(thumbImage, for: .selected)
+        let states: [UIControl.State] = [.application, .disabled, .focused, .highlighted, .normal, .reserved, .selected]
+        
+        for eachState in states {
+            betSlider.setThumbImage(thumbImage, for: eachState)
+        }
     }
     
     func swishAllLabelsAnimation() {
@@ -1245,3 +1135,4 @@ extension UIImage {
         return newImage!
     }
 }
+

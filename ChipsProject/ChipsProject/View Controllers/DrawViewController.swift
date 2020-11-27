@@ -414,23 +414,6 @@ class DrawViewController: UIViewController {
         playersChipsLabel.text = "\(drawWinner.playerName)'S CHIPS: \(drawWinner.playerChips)"
     }
     
-    func changeSmallBlindPlayer() {
-        nextSmallBlindPlayerIndex()
-            
-        if tableData.activePlayers[tableData.smallBlindPlayerIndex].isPlayerSmallBlind == true {
-            tableData.activePlayers[tableData.smallBlindPlayerIndex].isPlayerSmallBlind = false
-            nextSmallBlindPlayerIndex()
-        }
-    }
-        
-    func nextSmallBlindPlayerIndex() {
-        tableData.smallBlindPlayerIndex += 1
-                   
-        if tableData.smallBlindPlayerIndex > tableData.activePlayers.count - 1 {
-            tableData.smallBlindPlayerIndex = 0
-        }
-    }
-    
     func loadAd() {
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910") // test ad ID
         interstitial.delegate = self
@@ -482,7 +465,7 @@ class DrawViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UnwindToPokerTableSegue" {
-            changeSmallBlindPlayer()
+            tableData.changeSmallBlindPlayer()
             
             tableData.winningScreenAlreadyShown = false
             tableData.newHandNeeded = true

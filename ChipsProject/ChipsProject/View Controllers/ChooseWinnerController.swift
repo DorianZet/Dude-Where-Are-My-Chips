@@ -336,23 +336,6 @@ class ChooseWinnerController: UIViewController {
         }
     }
     
-    func changeSmallBlindPlayer() {
-        nextSmallBlindPlayerIndex()
-            
-        if tableData.activePlayers[tableData.smallBlindPlayerIndex].isPlayerSmallBlind == true {
-            tableData.activePlayers[tableData.smallBlindPlayerIndex].isPlayerSmallBlind = false
-            nextSmallBlindPlayerIndex()
-        }
-    }
-        
-    func nextSmallBlindPlayerIndex() {
-        tableData.smallBlindPlayerIndex += 1
-                   
-        if tableData.smallBlindPlayerIndex > tableData.activePlayers.count - 1 {
-            tableData.smallBlindPlayerIndex = 0
-        }
-    }
-    
     func hideCenterButtonsAndLabelAndShowSummaryView() {
         if tableData.activePlayers.count > 1 {
             configureSummaryViewForSummary()
@@ -573,7 +556,7 @@ class ChooseWinnerController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UnwindToPokerTableSegue" {
-            changeSmallBlindPlayer()
+            tableData.changeSmallBlindPlayer()
             
             tableData.winningScreenAlreadyShown = false
             tableData.newHandNeeded = true

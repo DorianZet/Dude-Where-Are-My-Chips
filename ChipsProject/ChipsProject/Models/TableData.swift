@@ -126,5 +126,130 @@ class TableData {
             allPlayersFolded = true
         }
     }
+    
+    func currentGameState() -> String {
+        if gameState == .preFlop {
+            return "PRE-FLOP (NO CARDS ON THE TABLE)\n\n"
+        } else if gameState == .theFlop {
+            return "THE FLOP (3 CARDS ON THE TABLE)\n\n"
+        } else if gameState == .theTurn {
+            return "THE TURN (4 CARDS ON THE TABLE)\n\n"
+        } else if gameState == .TheRiver {
+            return "THE RIVER (5 CARDS ON THE TABLE)\n\n"
+        } else {
+            return "?\n\n"
+        }
+    }
+    
+    func currentBetIsBelowOrEqualToMinimumBetOrRaiseBet(currentBet: Int) -> Bool {
+        if currentPlayer.playerTappedRaise == true {
+            if currentBet <= minimumBet * 2 {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            if currentBet <= minimumBet {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+    
+    func goToNextState() {
+        if gameState == GameState.preFlop {
+            gameState = GameState.theFlop
+            nextStateNeeded = true
+            print("All bets are the same, next state needed")
+        } else if gameState == GameState.theFlop {
+            gameState = GameState.theTurn
+            nextStateNeeded = true
+            print("All bets are the same, next state needed")
+        } else if gameState == GameState.theTurn {
+            gameState = GameState.TheRiver
+            nextStateNeeded = true
+            print("All bets are the same, next state needed")
+        } else if gameState == GameState.TheRiver {
+            gameState = GameState.finishHand
+            nextStateNeeded = true
+            print("All bets are the same, next state needed")
+        }
+    }
+    
+    func decideWhoStartsWhenNewHand() {
+        let playingPlayers = activePlayers.filter { $0.playerActiveInHand }
+        let noOneHasMovedYet = playingPlayers.allSatisfy { ($0.playerMadeAMove == false) }
+        
+        if gameState == .preFlop && playingPlayers.count == 2 && noOneHasMovedYet {
+            currentPlayer = activePlayers[smallBlindPlayerIndex]
+            currentPlayerIndex = smallBlindPlayerIndex
+        } else {
+            var afterBigBlindPlayerIndex = bigBlindPlayerIndex + 1
+            if afterBigBlindPlayerIndex > activePlayers.count - 1 {
+                afterBigBlindPlayerIndex = 0
+            }
+            currentPlayer = activePlayers[afterBigBlindPlayerIndex]
+            currentPlayerIndex = afterBigBlindPlayerIndex
+        }
+    }
+    
+    func resetPlayerPropertiesForNewHand() {
+        activePlayers.forEach {$0.playerBet = 0}
+        activePlayers.forEach { $0.playerBetInThisState = 0 }
+        activePlayers.forEach { $0.playerChipsToWinInDraw = 0 }
+
+        activePlayers.forEach { $0.playerActiveInHand = true }
+        activePlayers.forEach { $0.playerMadeAMove = false }
+        activePlayers.forEach { $0.playerChecked = false }
+        activePlayers.forEach { $0.playerWentAllIn = false }
+        activePlayers.forEach { $0.playerWentAllInForSidePot = false }
+        activePlayers.forEach { $0.playerFolded = false }
+        activePlayers.forEach { $0.playerTappedRaise = false }
+    }
+    
+    func resetTablePropertiesForNewHand() {
+        potChips = 0
+        currentBet = 0
+        allPlayersFolded = false
+        nextStateNeeded = false
+        winnerPlayer = PlayerData(playerName: String(), playerChips: Int(), playerBet: Int(), playerBetInThisState: Int())
+        gameState = .preFlop
+        minimumBet = smallBlind * 2
+        onePlayerLeftWithRestWentAllIn = false
+    }
+    
+    func allBetsAreZero() -> Bool {
+        let playingPlayers = activePlayers
+        
+        var sumOfBets = 0
+        
+        for eachPlayer in playingPlayers {
+            sumOfBets += eachPlayer.playerBetInThisState
+        }
+        
+        if sumOfBets == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func changeSmallBlindPlayer() {
+        nextSmallBlindPlayerIndex()
+            
+        if activePlayers[smallBlindPlayerIndex].isPlayerSmallBlind == true {
+            activePlayers[smallBlindPlayerIndex].isPlayerSmallBlind = false
+            nextSmallBlindPlayerIndex()
+        }
+    }
+        
+    func nextSmallBlindPlayerIndex() {
+        smallBlindPlayerIndex += 1
+                   
+        if smallBlindPlayerIndex > activePlayers.count - 1 {
+            smallBlindPlayerIndex = 0
+        }
+    }
 
 }
