@@ -7,7 +7,6 @@
 //
 import AVFoundation
 import UIKit
-import GoogleMobileAds
 
 class ViewController: UIViewController {
     @IBOutlet var playButton: RoundedButton!
@@ -23,26 +22,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setExclusiveTouchForAllButtons()
         configureButtonsForDevice()
         
         buttonAudioPlayer.loadSounds(forSoundNames: ["bigButton.aiff"])
-        checkForSound()
+        checkForSound(sound: &soundOn)
         
         view.backgroundColor = .darkGray
         createParticles()
     }
     
     @IBAction func tapPlayButton(_ sender: UIButton) {
-        playSound(for: "bigButton.aiff")
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &buttonAudioPlayer)
     }
     @IBAction func tapSettingsButton(_ sender: UIButton) {
-        playSound(for: "bigButton.aiff")
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &buttonAudioPlayer)
         performSegue(withIdentifier: "SettingsSegue", sender: sender)
     }
     @IBAction func tapAboutButton(_ sender: Any) {
-        playSound(for: "bigButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &buttonAudioPlayer)
+
         UIView.animate(withDuration: 0.2) {
             self.view.alpha = 0.8
         }
@@ -114,48 +112,6 @@ class ViewController: UIViewController {
         chipsEmitter.zPosition = -5
     }
     
-    func playSound(for fileString: String) {
-        if soundOn == true {
-            let path = Bundle.main.path(forResource: fileString, ofType: nil)
-            if let path = path {
-                let url = URL(fileURLWithPath: path)
-                
-                do {
-                    buttonAudioPlayer = try AVAudioPlayer(contentsOf: url)
-                    buttonAudioPlayer.play()
-                    buttonAudioPlayer.volume = 0.09
-                } catch {
-                    print("couldn't load the file \(fileString)")
-                }
-            } else {
-                print("path couldnt be found")
-            }
-        }
-    }
-    
-    func checkForSound() {
-        let defaults = UserDefaults.standard
-        let sound = defaults.string(forKey: "sound")
-        
-        if sound == "soundOn" {
-            soundOn = true
-        } else if sound == "soundOff" {
-            soundOn = false
-        } else {
-            defaults.set("soundOn", forKey: "sound")
-            soundOn = true
-        }
-    }
-    
-    func setExclusiveTouchForAllButtons() {
-        for subview in self.view.subviews {
-            if subview is UIButton {
-                let button = subview as! UIButton
-                button.isExclusiveTouch = true
-            }
-        }
-    }
-    
     func configureButtonsForDevice() {
         let allButtons = [playButton, settingsButton, aboutButton]
         
@@ -174,21 +130,3 @@ class ViewController: UIViewController {
 
 }
 
-extension AVAudioPlayer {
-    func loadSounds(forSoundNames soundStrings: [String]) {
-        var player = self
-        for each in soundStrings {
-            let path = Bundle.main.path(forResource: each, ofType: nil)
-            if let path = path {
-                let url = URL(fileURLWithPath: path)
-                do {
-                    player = try AVAudioPlayer(contentsOf: url)
-                    player.prepareToPlay()
-                    print("\(each) sound loaded!")
-                } catch {
-                    print("couldn't load the file \(each)")
-                }
-            }
-        }
-    }
-}

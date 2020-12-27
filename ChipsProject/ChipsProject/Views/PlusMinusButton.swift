@@ -17,6 +17,7 @@ class PlusMinusButton: UIButton {
         self.backgroundColor = .systemYellow
         self.setTitleColor(.black, for: .normal)
         self.titleLabel?.numberOfLines = 2
+        self.isExclusiveTouch = true
     }
     
 }

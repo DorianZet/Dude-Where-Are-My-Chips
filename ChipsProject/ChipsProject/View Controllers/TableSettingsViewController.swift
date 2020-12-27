@@ -8,7 +8,7 @@
 import AVFoundation
 import UIKit
 
-class TableSettingsViewController: UIViewController, UITextFieldDelegate {
+class TableSettingsViewController: UIViewController {
     var tableData: TableData!
     
     let maximumNumberOfPlayers = 9
@@ -53,16 +53,14 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var startingChipsAboveTitle: UILabel!
     @IBOutlet var blindsAboveTitle: UILabel!
     
-    
     var soundOn = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setExclusiveTouchForAllButtons()
 
         DispatchQueue.global().async {
             self.tableData = TableData()
-            self.checkForSound()
+            self.checkForSound(sound: &self.soundOn)
             self.buttonAudioPlayer.loadSounds(forSoundNames: ["bigButton.aiff", "smallButton.aiff"])
         }
 
@@ -89,8 +87,8 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func tapMinusOnePlayersButton(_ sender: UIButton) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &buttonAudioPlayer)
+
         currentNumberOfPlayers -= 1
         if tableData.playerNames != ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"] {
             tableData.playerNames = ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"]
@@ -104,7 +102,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func tapPlusOnePlayersButton(_ sender: UIButton) {
-        playSound(for: "smallButton.aiff")
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &buttonAudioPlayer)
 
         currentNumberOfPlayers += 1
         if tableData.playerNames != ["PLAYER 1", "PLAYER 2", "PLAYER 3", "PLAYER 4", "PLAYER 5", "PLAYER 6", "PLAYER 7", "PLAYER 8", "PLAYER 9"] {
@@ -119,8 +117,8 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func tapMinusChipsButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &buttonAudioPlayer)
+
         currentStartingChips -= 500
 
         if currentStartingChips < minimumStartingChips {
@@ -131,8 +129,8 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func tapPlusChipsButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &buttonAudioPlayer)
+
         currentStartingChips += 500
 
         if currentStartingChips > maximumStartingChips {
@@ -143,8 +141,8 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func tapMinusBlindsButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &buttonAudioPlayer)
+
         currentSmallBlind -= 5
 
         if currentSmallBlind < minimumSmallBlind {
@@ -155,8 +153,8 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func tapPlusBlindsButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &buttonAudioPlayer)
+
         currentSmallBlind += 5
 
         if currentSmallBlind > maximumSmallBlind {
@@ -167,7 +165,7 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func chooseNamePlayers(_ sender: UIButton) {
-        playSound(for: "bigButton.aiff")
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &buttonAudioPlayer)
 
         let ac = UIAlertController(title: "NAME THE PLAYERS", message: nil, preferredStyle: .alert)
         if #available(iOS 13.0, *) {
@@ -192,14 +190,14 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func chooseBackButton(_ sender: UIButton) {
-        playSound(for: "bigButton.aiff")
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &buttonAudioPlayer)
 
         performSegue(withIdentifier: "UnwindToChoosePlayersSegue", sender: sender)
     }
     
     @IBAction func chooseOKButton(_ sender: UIButton) {
-        playSound(for: "bigButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &buttonAudioPlayer)
+
         if tableData.smallBlind >= 1 && tableData.startingChips >= 500 {
             
             DispatchQueue.global().async {
@@ -209,7 +207,6 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
                     self.performSegue(withIdentifier: "PokerTableSegue", sender: sender)
                 }
             }
-            
         } else {
             return
         }
@@ -281,6 +278,16 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
         OKButton.titleLabel?.numberOfLines = 1
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PokerTableSegue" {
+            let destVC = segue.destination as! PokerTableViewController
+            destVC.tableData = tableData
+        }
+    }
+    
+}
+
+extension TableSettingsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // get the current text, or use an empty string if that failed
         let currentText = textField.text ?? ""
@@ -294,56 +301,4 @@ class TableSettingsViewController: UIViewController, UITextFieldDelegate {
         // make sure the result is under 16 characters
         return updatedText.count <= 10
     }
-    
-    func playSound(for fileString: String) {
-        if soundOn == true {
-            let path = Bundle.main.path(forResource: fileString, ofType: nil)
-            if let path = path {
-                let url = URL(fileURLWithPath: path)
-                DispatchQueue.global().async {
-                    do {
-                        self.buttonAudioPlayer = try AVAudioPlayer(contentsOf: url)
-                        self.buttonAudioPlayer.play()
-                        self.buttonAudioPlayer.volume = 0.09
-                    } catch {
-                        print("couldn't load the file \(fileString)")
-                    }
-                }
-            } else {
-                print("path couldn't be found")
-            }
-        }
-    }
-    
-    func checkForSound() {
-        let defaults = UserDefaults.standard
-        let sound = defaults.string(forKey: "sound")
-        
-        if sound == "soundOn" {
-            soundOn = true
-        } else if sound == "soundOff" {
-            soundOn = false
-        } else {
-            defaults.set("soundOn", forKey: "sound")
-            soundOn = true
-        }
-    }
-    
-    func setExclusiveTouchForAllButtons() {
-        for subview in self.view.subviews {
-            if subview is UIButton {
-                let button = subview as! UIButton
-                button.isExclusiveTouch = true
-            }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PokerTableSegue" {
-            
-            let destVC = segue.destination as! PokerTableViewController
-            destVC.tableData = tableData
-        }
-    }
-    
 }

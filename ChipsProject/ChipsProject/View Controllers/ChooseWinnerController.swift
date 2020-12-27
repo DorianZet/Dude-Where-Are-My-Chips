@@ -58,10 +58,8 @@ class ChooseWinnerController: UIViewController {
         loadAd()
         
         checkNumberOfGamesPlayed()
-        
-        setExclusiveTouchForAllButtons()
-        
-        checkForSound()
+                
+        checkForSound(sound: &soundOn)
         
         audioPlayer.loadSounds(forSoundNames: ["bigButton.aiff", "smallButton.aiff", "gameOver.mp3", "summary.mp3"])
         
@@ -91,8 +89,8 @@ class ChooseWinnerController: UIViewController {
     }
     
     @IBAction func tapPreviousPlayerButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
+
         let playersCount = playersAccountableForWin.count
         
         playerIndex -= 1
@@ -105,8 +103,8 @@ class ChooseWinnerController: UIViewController {
     }
     
     @IBAction func tapNextPlayerButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
+
         let playersCount = playersAccountableForWin.count
         
         playerIndex += 1
@@ -119,7 +117,7 @@ class ChooseWinnerController: UIViewController {
     }
     
     @IBAction func tapOKButton(_ sender: UIButton) {
-        playSound(for: "bigButton.aiff")
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &audioPlayer)
 
         confirmWinnerPlayer()
 
@@ -140,8 +138,8 @@ class ChooseWinnerController: UIViewController {
     }
     
     @IBAction func tapNewHandButton(_ sender: UIButton) {
-        playSound(for: "bigButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &audioPlayer)
+
         if sender.titleLabel?.text == "NEW HAND" {
             if interstitial.isReady && tableData.numberOfHandsPlayed == 1 {
                 interstitial.present(fromRootViewController: self) // present ad if ready
@@ -156,7 +154,7 @@ class ChooseWinnerController: UIViewController {
         }
     }
     @IBAction func tapDrawButton(_ sender: Any) {
-        playSound(for: "bigButton.aiff")
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &audioPlayer)
     }
     
     func setUpPlayersAccountableForWin() {
@@ -209,8 +207,8 @@ class ChooseWinnerController: UIViewController {
     }
     
     func confirmWinnerPlayer() {
-        playSound(for: "countLabel.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "countLabel.aiff", inAudioPlayer: &audioPlayer)
+
         if winnerPlayer.playerWentAllInForSidePot == true {
             let playersActiveInHand = tableData.activePlayers.filter { $0.playerActiveInHand == true }
             let playersWhoWentAllIn = tableData.activePlayers.filter { $0.playerWentAllIn == true }
@@ -367,9 +365,9 @@ class ChooseWinnerController: UIViewController {
                     self.summaryView.alpha = 1
                 }, completion: { _ in
                     if self.isGameOver == false {
-                        self.playSound(for: "summary.mp3")
+                        self.playSound(isSoundOn: self.soundOn, for: "summary.mp3", inAudioPlayer: &self.audioPlayer)
                     } else {
-                        self.playSound(for: "gameOver.mp3")
+                        self.playSound(isSoundOn: self.soundOn, for: "gameOver.mp3", inAudioPlayer: &self.audioPlayer)
                         self.numberOfGamesPlayed += 1
                         
                         self.saveNumberOfGamesPlayed()
@@ -486,48 +484,6 @@ class ChooseWinnerController: UIViewController {
         playerChipsLabel.textColor = .systemYellow
         titleLabel.textColor = .systemYellow
         summaryLabel.textColor = .systemYellow
-    }
-    
-    func playSound(for fileString: String) {
-        if soundOn == true {
-            let path = Bundle.main.path(forResource: fileString, ofType: nil)
-            if let path = path {
-                let url = URL(fileURLWithPath: path)
-                
-                do {
-                    audioPlayer = try AVAudioPlayer(contentsOf: url)
-                    audioPlayer.play()
-                    audioPlayer.volume = 0.09
-                } catch {
-                    print("couldn't load the file \(fileString)")
-                }
-            } else {
-                print("path couldnt be found")
-            }
-        }
-    }
-    
-    func checkForSound() {
-        let defaults = UserDefaults.standard
-        let sound = defaults.string(forKey: "sound")
-        
-        if sound == "soundOn" {
-            soundOn = true
-        } else if sound == "soundOff" {
-            soundOn = false
-        } else {
-            defaults.set("soundOn", forKey: "sound")
-            soundOn = true
-        }
-    }
-    
-    func setExclusiveTouchForAllButtons() {
-        for subview in self.view.subviews {
-            if subview is UIButton {
-                let button = subview as! UIButton
-                button.isExclusiveTouch = true
-            }
-        }
     }
     
     func checkNumberOfGamesPlayed() {

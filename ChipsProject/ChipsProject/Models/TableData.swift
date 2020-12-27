@@ -58,13 +58,16 @@ class TableData {
         
         activePlayers[bigBlindPlayerIndex].isPlayerBigBlind = true
 
-        
         print("Small blind for activePlayers index: \(smallBlindPlayerIndex)")
         print("Big blind for active Players index: \(bigBlindPlayerIndex)")
     }
     
     func configureBlindsBeforeNewHand() {
-        // See if the small blind player can afford a small blind:
+        seeIfSmallBlindPlayerCanAffordSmallBlind()
+        seeIfBigBlindPlayerCanAffordBigBlind()
+    }
+    
+    func seeIfSmallBlindPlayerCanAffordSmallBlind() {
         let smallBlindPlayer = activePlayers[smallBlindPlayerIndex]
         if smallBlindPlayer.playerChips > smallBlind {
             smallBlindPlayer.playerBetInThisState = smallBlind
@@ -81,8 +84,9 @@ class TableData {
             smallBlindPlayer.playerWentAllIn = true
             smallBlindPlayer.playerActiveInHand = false
         }
-        
-        // See if the big blind player can afford a big blind:
+    }
+    
+    func seeIfBigBlindPlayerCanAffordBigBlind() {
         let bigBlindPlayer = activePlayers[bigBlindPlayerIndex]
         if bigBlindPlayer.playerChips > smallBlind * 2 {
             activePlayers[bigBlindPlayerIndex].playerBetInThisState = smallBlind * 2
@@ -99,7 +103,6 @@ class TableData {
             bigBlindPlayer.playerWentAllIn = true
             bigBlindPlayer.playerActiveInHand = false
         }
-        
     }
     
     func createPlayers() {
@@ -160,21 +163,18 @@ class TableData {
     func goToNextState() {
         if gameState == GameState.preFlop {
             gameState = GameState.theFlop
-            nextStateNeeded = true
             print("All bets are the same, next state needed")
         } else if gameState == GameState.theFlop {
             gameState = GameState.theTurn
-            nextStateNeeded = true
             print("All bets are the same, next state needed")
         } else if gameState == GameState.theTurn {
             gameState = GameState.TheRiver
-            nextStateNeeded = true
             print("All bets are the same, next state needed")
         } else if gameState == GameState.TheRiver {
             gameState = GameState.finishHand
-            nextStateNeeded = true
             print("All bets are the same, next state needed")
         }
+        nextStateNeeded = true
     }
     
     func decideWhoStartsWhenNewHand() {
@@ -195,7 +195,7 @@ class TableData {
     }
     
     func resetPlayerPropertiesForNewHand() {
-        activePlayers.forEach {$0.playerBet = 0}
+        activePlayers.forEach { $0.playerBet = 0 }
         activePlayers.forEach { $0.playerBetInThisState = 0 }
         activePlayers.forEach { $0.playerChipsToWinInDraw = 0 }
 

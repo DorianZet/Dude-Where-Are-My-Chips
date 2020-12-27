@@ -17,6 +17,7 @@ class RoundedButton: UIButton {
         self.backgroundColor = .systemYellow
         self.setTitleColor(.black, for: .normal)
         self.titleLabel?.numberOfLines = 2
+        self.isExclusiveTouch = true
         
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         self.addTarget(self, action: #selector(buttonDown), for: .touchDown)

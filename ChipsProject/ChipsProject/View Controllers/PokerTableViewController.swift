@@ -79,25 +79,23 @@ class PokerTableViewController: UIViewController {
         DispatchQueue.global(qos: .userInitiated).async {
             self.audioPlayer.loadSounds(forSoundNames: ["betRaise.mp3", "allIn.mp3", "call.mp3", "nextState.mp3", "check.aiff", "preFlop.mp3"])
         }
+        configureTopButtons()
         
         betSlider.accessibilityIdentifier = "betSlider"
-        setExclusiveTouchForAllButtons()
-        
-        checkForSound()
+        setThumbImage()
+
+        checkForSound(sound: &soundOn)
         
         view.backgroundColor = .darkGray
                 
         callCheckButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        
-        configureTopButtons()
-        
+                
         setCardsImage()
         
         hideAllLabelsAndButtons()
         handStateLabel.adjustsFontSizeToFitWidth = true
         handStateLabel.sizeToFit()
         changeFontToPixel()
-        setThumbImage()
 
         hideSliderAndButtons()
                               
@@ -105,8 +103,8 @@ class PokerTableViewController: UIViewController {
         newHand()
     }
     @IBAction func tapHomeIcon(_ sender: UIButton) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
+
         UIView.animate(withDuration: 0.2) {
             self.view.alpha = 0.8
         }
@@ -173,13 +171,13 @@ class PokerTableViewController: UIViewController {
             }
             defaults.set("soundOn", forKey: "sound")
             soundOn = true
-            playSound(for: "smallButton.aiff")
+            playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
         }
     }
     
     @IBAction func tapInfoButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
+
         var tableInfoMessage = tableData.currentGameState()
         
         for eachPlayer in tableData.activePlayers {
@@ -239,8 +237,8 @@ class PokerTableViewController: UIViewController {
     
     
     @IBAction func tapFoldButton(_ sender: UIButton) {
-        playSound(for: "fold.mp3")
-        
+        playSound(isSoundOn: soundOn, for: "fold.mp3", inAudioPlayer: &audioPlayer)
+
         tableData.currentPlayer.playerActiveInHand = false
         tableData.currentPlayer.playerFolded = true
         tableData.currentPlayer.playerMadeAMove = true
@@ -268,9 +266,9 @@ class PokerTableViewController: UIViewController {
                 configureAllInButton()
             } else { // "CALL" button:
                 if sender.titleLabel?.text == "CHECK" {
-                    playSound(for: "check.aiff")
+                    playSound(isSoundOn: soundOn, for: "check.aiff", inAudioPlayer: &audioPlayer)
                 } else {
-                    playSound(for: "call.mp3")
+                    playSound(isSoundOn: soundOn, for: "call.mp3", inAudioPlayer: &audioPlayer)
                 }
                 configureCallButton()
             }
@@ -278,11 +276,11 @@ class PokerTableViewController: UIViewController {
             if sender.title(for: .normal) == "ALL IN" { // "ALL IN" button:
                 configureAllInButton()
             } else if (sender.titleLabel?.text?.contains("CALL"))! { // "CALL" button:
-                playSound(for: "call.mp3")
+                playSound(isSoundOn: soundOn, for: "call.mp3", inAudioPlayer: &audioPlayer)
                 configureCallButton()
             } else { // "CHECK" button:
-                playSound(for: "check.aiff")
-                
+                playSound(isSoundOn: soundOn, for: "check.aiff", inAudioPlayer: &audioPlayer)
+
                 checkForNextState()
                 newTurn()
             }
@@ -305,8 +303,8 @@ class PokerTableViewController: UIViewController {
     }
     
     @IBAction func tapMinusButton(_ sender: UIButton) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
+
         if sliderChips >= tableData.currentPlayer.playerChips || tableData.currentBetIsBelowOrEqualToMinimumBetOrRaiseBet(currentBet: currentBet) {
             return
         } else {
@@ -316,8 +314,8 @@ class PokerTableViewController: UIViewController {
     }
     
     @IBAction func tapOKButton(_ sender: UIButton) {
-        playSound(for: "ok.mp3")
-        
+        playSound(isSoundOn: soundOn, for: "ok.mp3", inAudioPlayer: &audioPlayer)
+
         if currentBet == 0 {
             return
         } else {
@@ -344,8 +342,8 @@ class PokerTableViewController: UIViewController {
     }
     
     @IBAction func tapPlusButton(_ sender: UIButton) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
+
         if sliderChips <= 0 {
             return
         } else {
@@ -355,8 +353,8 @@ class PokerTableViewController: UIViewController {
     }
     
     func configureAllInButton() {
-        playSound(for: "allIn.mp3")
-        
+        playSound(isSoundOn: soundOn, for: "allIn.mp3", inAudioPlayer: &audioPlayer)
+
         tableData.potChips += playerChips
         tableData.currentPlayer.playerBet += playerChips
         tableData.currentPlayer.playerBetInThisState += playerChips
@@ -375,7 +373,6 @@ class PokerTableViewController: UIViewController {
         checkIfAllPlayersWentAllIn()
         checkForNextState()
         newTurn()
-        
     }
     
     func configureCallButton() {
@@ -390,8 +387,8 @@ class PokerTableViewController: UIViewController {
     }
     
     func configureBetButton() {
-        playSound(for: "betRaise.mp3")
-        
+        playSound(isSoundOn: soundOn, for: "betRaise.mp3", inAudioPlayer: &audioPlayer)
+
         if betSlider.isHidden == false {
             return
         } else {
@@ -407,8 +404,8 @@ class PokerTableViewController: UIViewController {
     }
     
     func configureRaiseButton() {
-        playSound(for: "betRaise.mp3")
-        
+        playSound(isSoundOn: soundOn, for: "betRaise.mp3", inAudioPlayer: &audioPlayer)
+
         if betSlider.isHidden == false {
             return
         } else {
@@ -715,12 +712,12 @@ class PokerTableViewController: UIViewController {
         UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 35, options: [], animations: {
             self.handStateView.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.handStateView.alpha = 1
-        }) { _ in
+        }) { [self] _ in
             if self.tableData.gameState == .preFlop {
                 self.showLabelsAndButtons()
-                self.playSound(for: "preFlop.mp3")
+                playSound(isSoundOn: self.soundOn, for: "preFlop.mp3", inAudioPlayer: &self.audioPlayer)
             } else {
-                self.playSound(for: "nextState.mp3")
+                playSound(isSoundOn: self.soundOn, for: "nextState.mp3", inAudioPlayer: &self.audioPlayer)
             }
             self.configureTurn()
             self.currentBetLabel.isHidden = false
@@ -809,7 +806,7 @@ class PokerTableViewController: UIViewController {
             let playersActiveInHand = playingPlayers.filter { $0.playerActiveInHand == true }
 
             if chipsToMatchBet != 0 {
-                if  playerChips > chipsToMatchBet {
+                if playerChips > chipsToMatchBet {
                     callCheckButton.setTitle("CALL: \(chipsToMatchBet)", for: .normal)
                     callCheckButton.contentHorizontalAlignment = .center
                     callCheckButton.titleLabel?.textAlignment = .center
@@ -1020,7 +1017,6 @@ class PokerTableViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UnwindToTitleSegue" {
-            
             let destVC = segue.destination as! ViewController
             if soundOn == true {
                 destVC.soundOn = true
@@ -1073,66 +1069,6 @@ class PokerTableViewController: UIViewController {
         }
     }
     
-    func playSound(for fileString: String) {
-        if soundOn == true {
-            let path = Bundle.main.path(forResource: fileString, ofType: nil)
-            if let path = path {
-                let url = URL(fileURLWithPath: path)
-                
-                do {
-                    audioPlayer = try AVAudioPlayer(contentsOf: url)
-                    audioPlayer.play()
-                    audioPlayer.volume = 0.09
-                } catch {
-                    print("couldn't load the file \(fileString)")
-                }
-            } else {
-                print("\(fileString) path couldn't be found")
-            }
-        }
-    }
-    
-    func checkForSound() {
-        let defaults = UserDefaults.standard
-        let sound = defaults.string(forKey: "sound")
-        
-        if sound == "soundOn" {
-            soundOn = true
-        } else if sound == "soundOff" {
-            soundOn = false
-        } else {
-            defaults.set("soundOn", forKey: "sound")
-            soundOn = true
-        }
-    }
-    
-    func setExclusiveTouchForAllButtons() {
-        for subview in self.view.subviews {
-            if subview is UIButton {
-                let button = subview as! UIButton
-                button.isExclusiveTouch = true
-            }
-        }
-    }
-    
     @IBAction func unwindToPokerTable(_ sender: UIStoryboardSegue) {}
-}
-
-extension UIImage {
-    func resize(size: CGSize) -> UIImage {
-        let widthRatio  = size.width/self.size.width
-        let heightRatio = size.height/self.size.height
-        var updateSize = size
-        if(widthRatio > heightRatio) {
-            updateSize = CGSize(width:self.size.width*heightRatio, height:self.size.height*heightRatio)
-        } else if heightRatio > widthRatio {
-            updateSize = CGSize(width:self.size.width*widthRatio,  height:self.size.height*widthRatio)
-        }
-        UIGraphicsBeginImageContextWithOptions(updateSize, false, UIScreen.main.scale)
-        self.draw(in: CGRect(origin: .zero, size: updateSize))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage!
-    }
 }
 

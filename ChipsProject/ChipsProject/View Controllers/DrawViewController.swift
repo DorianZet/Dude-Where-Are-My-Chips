@@ -65,10 +65,8 @@ class DrawViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadAd()
-        
-        setExclusiveTouchForAllButtons()
-        
-        checkForSound()
+                
+        checkForSound(sound: &soundOn)
         
         audioPlayer.loadSounds(forSoundNames: ["bigButton.aiff", "smallButton.aiff", "summary.mp3"])
         
@@ -96,8 +94,8 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func tapPreviousPlayerButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
+
         let playersCount = playersAccountableForDraw.count
         
         playerIndex -= 1
@@ -109,7 +107,7 @@ class DrawViewController: UIViewController {
         print(drawWinner.playerName)
     }
     @IBAction func tapNextPlayerButton(_ sender: Any) {
-        playSound(for: "smallButton.aiff")
+        playSound(isSoundOn: soundOn, for: "smallButton.aiff", inAudioPlayer: &audioPlayer)
 
         let playersCount = playersAccountableForDraw.count
 
@@ -122,7 +120,7 @@ class DrawViewController: UIViewController {
         print(drawWinner.playerName)
     }
     @IBAction func tapAddNextPlayerButton(_ sender: Any) {
-        playSound(for: "bigButton.aiff")
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &audioPlayer)
 
         numberOfDrawWinners += 1
         drawWinners.append(drawWinner)
@@ -134,14 +132,14 @@ class DrawViewController: UIViewController {
         }
     }
     @IBAction func tapDoneButton(_ sender: Any) {
-        playSound(for: "bigButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &audioPlayer)
+
         distributeTheChips()
     }
         
     @IBAction func tapNewHandButton(_ sender: Any) {
-        playSound(for: "bigButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &audioPlayer)
+
         if interstitial.isReady && tableData.numberOfHandsPlayed == 1 {
             interstitial.present(fromRootViewController: self)
         } else {
@@ -153,8 +151,8 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func tapCancelButton(_ sender: Any) {
-        playSound(for: "bigButton.aiff")
-        
+        playSound(isSoundOn: soundOn, for: "bigButton.aiff", inAudioPlayer: &audioPlayer)
+
         tableData.activePlayers.forEach { $0.playerChipsToWinInDraw = 0 } // reset all players draw wins on tapping the cancel button.
     }
     
@@ -220,7 +218,6 @@ class DrawViewController: UIViewController {
 
         print("Now there are \(potChips) pot chips.")
         
-        // after distributing the chips, we can get rid of the players that have 0 chips:
         removeLosersAndAddThemToLosersArray()
         
         summaryLabel.text = "SUMMARY\n\n"
@@ -229,7 +226,7 @@ class DrawViewController: UIViewController {
         }
         summaryLabel.text! += "\n"
 
-        let finalSummaryText = summaryLabel.text!.dropLast(2) // deleting the last \n from the summaryLabel.text.
+        let finalSummaryText = summaryLabel.text!.dropLast(2)
         summaryLabel.text! = String(finalSummaryText)
         
         if losersArray.count > 0 {
@@ -239,7 +236,7 @@ class DrawViewController: UIViewController {
                 summaryLabel.text! += "\(eachLoser.playerName) IS OUT!\n"
             }
             
-            let finalSummaryTextWithLosers = summaryLabel.text!.dropLast(1) // deleting the last \n from the summaryLabel.text.
+            let finalSummaryTextWithLosers = summaryLabel.text!.dropLast(1)
             summaryLabel.text! = String(finalSummaryTextWithLosers)
         }
         
@@ -252,29 +249,23 @@ class DrawViewController: UIViewController {
                 self.summaryView.alpha = 1
                 self.view.isUserInteractionEnabled = true
             }, completion: { _ in
-                self.playSound(for: "summary.mp3")
+                self.playSound(isSoundOn: self.soundOn, for: "summary.mp3", inAudioPlayer: &self.audioPlayer)
             })
         })
 
     }
     
     func changeTheTitleText() {
-        if numberOfDrawWinners == 1 {
-            titleText = "ADD THE 2ND DRAW WINNER"
-        } else if numberOfDrawWinners == 2 {
-            titleText = "ADD THE 3RD DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
-        } else if numberOfDrawWinners == 3 {
-            titleText = "ADD THE 4TH DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
-        } else if numberOfDrawWinners == 4 {
-            titleText = "ADD THE 5TH DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
-        } else if numberOfDrawWinners == 5 {
-            titleText = "ADD THE 6TH DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
-        } else if numberOfDrawWinners == 6 {
-            titleText = "ADD THE 7TH DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
-        } else if numberOfDrawWinners == 7 {
-            titleText = "ADD THE 8TH DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
-        } else if numberOfDrawWinners == 8 {
-            titleText = "ADD THE 9TH DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
+        for number in 1...8 {
+            if numberOfDrawWinners == number && number == 1 {
+                titleText = "ADD THE 2ND DRAW WINNER"
+                return
+            } else if numberOfDrawWinners == number && number == 2 {
+                titleText = "ADD THE 3RD DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
+                return
+            } else if numberOfDrawWinners == number && number > 2 {
+                titleText = "ADD THE \(number)TH DRAW WINNER OR TAP \"DONE\" TO DISTRIBUTE THE CHIPS"
+            }
         }
     }
     
@@ -303,7 +294,6 @@ class DrawViewController: UIViewController {
         let drawWinnerIndex = self.playersAccountableForDraw.firstIndex(of: self.drawWinner)
         if let drawWinnerIndex = drawWinnerIndex {
             self.playersAccountableForDraw.remove(at: drawWinnerIndex)
-            
             
             if doneButton.isHidden == true && drawWinners.count == 2 {
                 UIView.animate(withDuration: 0.4, animations: {
@@ -419,48 +409,6 @@ class DrawViewController: UIViewController {
         interstitial.delegate = self
         let request = GADRequest()
         interstitial.load(request)
-    }
-    
-    func playSound(for fileString: String) {
-        if soundOn == true {
-            let path = Bundle.main.path(forResource: fileString, ofType: nil)
-            if let path = path {
-                let url = URL(fileURLWithPath: path)
-                
-                do {
-                    audioPlayer = try AVAudioPlayer(contentsOf: url)
-                    audioPlayer.play()
-                    audioPlayer.volume = 0.09
-                } catch {
-                    print("couldn't load the file \(fileString)")
-                }
-            } else {
-                print("path couldn't be found")
-            }
-        }
-    }
-    
-    func checkForSound() {
-        let defaults = UserDefaults.standard
-        let sound = defaults.string(forKey: "sound")
-        
-        if sound == "soundOn" {
-            soundOn = true
-        } else if sound == "soundOff" {
-            soundOn = false
-        } else {
-            defaults.set("soundOn", forKey: "sound")
-            soundOn = true
-        }
-    }
-    
-    func setExclusiveTouchForAllButtons() {
-        for subview in self.view.subviews {
-            if subview is UIButton {
-                let button = subview as! UIButton
-                button.isExclusiveTouch = true
-            }
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

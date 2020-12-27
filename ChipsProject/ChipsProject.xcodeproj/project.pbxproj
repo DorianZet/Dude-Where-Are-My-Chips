@@ -40,6 +40,9 @@
 		612D721A24D42E01004BF254 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 612D721924D42E01004BF254 /* Assets.xcassets */; };
 		612D721D24D42E01004BF254 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 612D721B24D42E01004BF254 /* LaunchScreen.storyboard */; };
 		612D723324D42E01004BF254 /* ChipsProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612D723224D42E01004BF254 /* ChipsProjectUITests.swift */; };
+		612EFC01259880CB00136B18 /* AVAudioPlayer+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612EFC00259880CB00136B18 /* AVAudioPlayer+Ext.swift */; };
+		612EFC292598889200136B18 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612EFC282598889200136B18 /* UIViewController+Ext.swift */; };
+		612EFC2E25988F1B00136B18 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612EFC2D25988F1B00136B18 /* UIImage+Ext.swift */; };
 		613062C7255F16AD00C68BB1 /* Dude__Where_Are_My_Chips_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613062C6255F16AD00C68BB1 /* Dude__Where_Are_My_Chips_Tests.swift */; };
 		6136ADE924FE790900330AF1 /* PixelEmulator-xq08.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6136ADE824FE790900330AF1 /* PixelEmulator-xq08.ttf */; };
 		61B14241250F7A1500CCF7B1 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B14240250F7A1500CCF7B1 /* DrawViewController.swift */; };
@@ -109,6 +112,9 @@
 		612D722E24D42E01004BF254 /* ChipsProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChipsProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		612D723224D42E01004BF254 /* ChipsProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsProjectUITests.swift; sourceTree = "<group>"; };
 		612D723424D42E01004BF254 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		612EFC00259880CB00136B18 /* AVAudioPlayer+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPlayer+Ext.swift"; sourceTree = "<group>"; };
+		612EFC282598889200136B18 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		612EFC2D25988F1B00136B18 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		613062C4255F16AD00C68BB1 /* Dude, Where Are My Chips?Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dude, Where Are My Chips?Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		613062C6255F16AD00C68BB1 /* Dude__Where_Are_My_Chips_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dude__Where_Are_My_Chips_Tests.swift; sourceTree = "<group>"; };
 		613062C8255F16AD00C68BB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				612D721E24D42E01004BF254 /* Info.plist */,
+				612EFBFF259880BB00136B18 /* Extensions */,
 				6130C8C2255ED65700CCACB6 /* Models */,
 				6130C8C0255ED5E800CCACB6 /* Views */,
 				6130C8BF255ED5C600CCACB6 /* View Controllers */,
@@ -237,6 +244,16 @@
 				612D723424D42E01004BF254 /* Info.plist */,
 			);
 			path = ChipsProjectUITests;
+			sourceTree = "<group>";
+		};
+		612EFBFF259880BB00136B18 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				612EFC00259880CB00136B18 /* AVAudioPlayer+Ext.swift */,
+				612EFC282598889200136B18 /* UIViewController+Ext.swift */,
+				612EFC2D25988F1B00136B18 /* UIImage+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		613062C5255F16AD00C68BB1 /* Dude, Where Are My Chips?Tests */ = {
@@ -547,7 +564,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				612EFC2E25988F1B00136B18 /* UIImage+Ext.swift in Sources */,
+				612EFC01259880CB00136B18 /* AVAudioPlayer+Ext.swift in Sources */,
 				612D721524D42DFD004BF254 /* ViewController.swift in Sources */,
+				612EFC292598889200136B18 /* UIViewController+Ext.swift in Sources */,
 				612B1C8124D940690058AC81 /* PokerTableViewController.swift in Sources */,
 				612551E524E2BCBC00DDAF9B /* RoundedLabel.swift in Sources */,
 				61FD1CAB24E143DF007EC8B3 /* ChooseWinnerController.swift in Sources */,
